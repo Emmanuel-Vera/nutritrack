@@ -1,0 +1,2783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#2F4F2F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NutriTrack">
+<title>NutriTrack · En memoria de Yessica</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"NutriTrack","short_name":"NutriTrack","start_url":".","display":"standalone","background_color":"%23F5F1E8","theme_color":"%232F4F2F","icons":[{"src":"data:image/svg%2Bxml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22><rect width=%22192%22 height=%22192%22 fill=%22%232F4F2F%22 rx=%2238%22/><text x=%2296%22 y=%22128%22 font-size=%22110%22 text-anchor=%22middle%22 fill=%22%23E8C547%22 font-family=%22serif%22 font-weight=%22bold%22>N</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
+
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232F4F2F" rx="20"/><text x="50" y="68" font-size="58" text-anchor="middle" fill="%23E8C547" font-family="serif" font-weight="bold">N</text></svg>'>
+
+<style>
+:root {
+    --bg: #F5F1E8;
+    --bg-card: #FFFEF9;
+    --ink: #1F2918;
+    --ink-soft: #4A5540;
+    --ink-faint: #8B9280;
+    --forest: #2F4F2F;
+    --forest-light: #4A6B4A;
+    --olive: #6B8E23;
+    --ochre: #E8C547;
+    --terracotta: #C56B3E;
+    --plum: #7B3F5C;
+    --cream: #EDE4D0;
+    --border: #D8D0BC;
+    --border-soft: #E8E0CC;
+    --shadow-sm: 0 1px 2px rgba(31, 41, 24, 0.08);
+    --shadow-md: 0 4px 16px rgba(31, 41, 24, 0.10);
+    --shadow-lg: 0 12px 32px rgba(31, 41, 24, 0.12);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Work Sans', -apple-system, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    overscroll-behavior: none;
+    height: 100%;
+}
+
+body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+    padding-bottom: 88px;
+    background-image: 
+        radial-gradient(circle at 20% 10%, rgba(107, 142, 35, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(232, 197, 71, 0.04) 0%, transparent 40%);
+    min-height: 100vh;
+}
+
+/* =================== HEADER =================== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border-soft);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 14px 20px 12px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    gap: 8px;
+}
+
+.logo {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.logo-mark {
+    font-family: var(--serif);
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--forest);
+    letter-spacing: -0.5px;
+    line-height: 1;
+}
+
+.logo-mark::before {
+    content: "·";
+    color: var(--ochre);
+    margin-right: 6px;
+    font-size: 34px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.15s;
+}
+
+.icon-btn:active {
+    background: var(--cream);
+}
+
+.icon-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--forest);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.user-pill {
+    background: var(--forest);
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 7px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    font-family: var(--sans);
+    transition: background 0.15s;
+}
+
+.user-pill:active {
+    background: var(--forest-light);
+}
+
+.memorial {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2px;
+}
+
+/* =================== TABS =================== */
+nav.tabs {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(31, 41, 24, 0.06);
+}
+
+.tab {
+    background: transparent;
+    border: none;
+    padding: 10px 4px;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+}
+
+.tab svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.tab.active {
+    color: var(--forest);
+    background: rgba(107, 142, 35, 0.1);
+}
+
+.tab.active svg {
+    stroke-width: 2.2;
+}
+
+/* =================== MAIN =================== */
+main {
+    padding: 20px;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.view {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =================== SECTION HEADERS =================== */
+.section-title {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.8px;
+    margin-bottom: 4px;
+    line-height: 1.1;
+}
+
+.section-title em {
+    font-style: italic;
+    color: var(--olive);
+    font-weight: 400;
+}
+
+.section-subtitle {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+/* =================== COMMON CARD =================== */
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-soft);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+/* =================== SHOPPING LIST =================== */
+.progress-banner {
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 100%);
+    color: var(--bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-banner::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(232, 197, 71, 0.3) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.progress-number {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.progress-number small {
+    font-size: 18px;
+    opacity: 0.7;
+    font-weight: 400;
+}
+
+.progress-label {
+    font-size: 13px;
+    opacity: 0.85;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.progress-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    margin-top: 14px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--ochre);
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-group {
+    margin-bottom: 20px;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--cream);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.category-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--forest);
+    letter-spacing: -0.2px;
+}
+
+.category-count {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    background: var(--bg-card);
+    padding: 3px 9px;
+    border-radius: 999px;
+}
+
+.item-list {
+    list-style: none;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border-soft);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border-soft);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item:active {
+    background: var(--bg);
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: var(--bg-card);
+}
+
+.item.checked .checkbox {
+    background: var(--forest);
+    border-color: var(--forest);
+}
+
+.checkbox svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--bg);
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s;
+}
+
+.item.checked .checkbox svg {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-name {
+    font-weight: 500;
+    font-size: 14.5px;
+    color: var(--ink);
+    transition: all 0.2s;
+}
+
+.item.checked .item-name {
+    color: var(--ink-faint);
+    text-decoration: line-through;
+}
+
+.item-amount {
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+.reset-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+}
+
+.reset-btn:active {
+    background: var(--cream);
+}
+
+/* =================== MEALS TRACKING =================== */
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 18px;
+}
+
+.day-info {
+    font-family: var(--serif);
+}
+
+.day-number {
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -1.5px;
+}
+
+.day-month {
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+    text-transform: lowercase;
+}
+
+.day-stats {
+    text-align: right;
+}
+
+.stat-value {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--olive);
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.stat-label {
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.date-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+}
+
+.date-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.date-chip {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    text-align: center;
+    min-width: 54px;
+    transition: all 0.15s;
+    font-family: var(--sans);
+}
+
+.date-chip-day {
+    font-size: 10px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.date-chip-num {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.date-chip.active {
+    background: var(--forest);
+    color: var(--bg);
+    border-color: var(--forest);
+}
+
+.date-chip.active .date-chip-day {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.date-chip.today:not(.active) {
+    border-color: var(--olive);
+    color: var(--olive);
+}
+
+.meal-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-soft);
+    position: relative;
+    transition: all 0.2s;
+}
+
+.meal-card.completed {
+    background: rgba(107, 142, 35, 0.05);
+    border-color: rgba(107, 142, 35, 0.3);
+}
+
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 12px;
+}
+
+.meal-title-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.meal-time {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.meal-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+}
+
+.meal-desc {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+.meal-toggle {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--bg-card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+}
+
+.meal-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--ink-faint);
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.2s;
+}
+
+.meal-card.completed .meal-toggle {
+    background: var(--olive);
+    border-color: var(--olive);
+}
+
+.meal-card.completed .meal-toggle svg {
+    stroke: var(--bg-card);
+    stroke-width: 3;
+}
+
+.portions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-soft);
+}
+
+.portion-tag {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    padding: 4px 10px;
+    background: var(--cream);
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+.portion-tag strong {
+    color: var(--forest);
+    font-weight: 700;
+}
+
+/* Lunchbox indicator on meal cards */
+.lunchbox-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(232, 197, 71, 0.18);
+    color: #8B6914;
+    border: 1px solid rgba(232, 197, 71, 0.4);
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 3px 8px 3px 6px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 6px;
+}
+
+.lunchbox-badge svg {
+    width: 11px;
+    height: 11px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Update day chip - special state for Sunday (prep/update day) */
+.date-chip.update-day {
+    background: var(--plum);
+    color: var(--bg);
+    border-color: var(--plum);
+    position: relative;
+}
+
+.date-chip.update-day .date-chip-day {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.date-chip.update-day.active {
+    background: var(--plum);
+    outline: 2px solid var(--ochre);
+    outline-offset: 2px;
+}
+
+/* Banner shown when user lands on update day */
+.update-day-banner {
+    background: linear-gradient(135deg, var(--plum) 0%, #5C2F44 100%);
+    color: var(--bg);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+}
+
+.update-day-banner::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(232, 197, 71, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.update-day-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+}
+
+.update-day-text {
+    font-size: 13px;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+/* Lunchbox dimensions card */
+.lunchbox-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid var(--ochre);
+}
+
+.lunchbox-card-title {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--forest);
+    letter-spacing: -0.2px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lunchbox-card-title svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--ochre);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.lunchbox-dims {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+.dim-cell {
+    background: var(--cream);
+    padding: 10px 8px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.dim-value {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--forest);
+    letter-spacing: -0.5px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.dim-value small {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 400;
+    margin-left: 2px;
+}
+
+.dim-label {
+    font-size: 10px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.lunchbox-note {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-soft);
+}
+
+/* Compatible containers inventory */
+.portable-container-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+    align-items: center;
+}
+
+.portable-container-item:last-child {
+    border-bottom: none;
+}
+
+.portable-container-item .pc-label {
+    color: var(--ink);
+    font-weight: 500;
+}
+
+.portable-container-item .pc-label-small {
+    color: var(--ink-faint);
+    font-size: 11.5px;
+    margin-top: 2px;
+}
+
+.portable-container-item .pc-fits {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--forest);
+    background: rgba(107, 142, 35, 0.1);
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+/* =================== MEAL PREP =================== */
+.prep-intro {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-soft);
+}
+
+.prep-intro-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+}
+
+.prep-time-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.prep-time-item {
+    text-align: center;
+    padding: 12px 8px;
+    background: var(--cream);
+    border-radius: var(--radius-sm);
+}
+
+.prep-time-value {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--forest);
+    letter-spacing: -0.5px;
+    line-height: 1;
+}
+
+.prep-time-label {
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.prep-tab-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    background: var(--cream);
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+}
+
+.prep-tab {
+    padding: 10px 6px;
+    background: transparent;
+    border: none;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+}
+
+.prep-tab.active {
+    background: var(--bg-card);
+    color: var(--forest);
+    box-shadow: var(--shadow-sm);
+}
+
+.prep-tab-content {
+    display: none;
+}
+
+.prep-tab-content.active {
+    display: block;
+}
+
+/* Container info card for "equipment" */
+.equipment-card {
+    background: linear-gradient(135deg, var(--plum) 0%, #5C2F44 100%);
+    color: var(--bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.equipment-card::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(232, 197, 71, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.equipment-card-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.equipment-list {
+    list-style: none;
+}
+
+.equipment-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 13.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.equipment-list li:last-child {
+    border-bottom: none;
+}
+
+.equipment-name {
+    font-weight: 500;
+}
+
+.equipment-qty {
+    font-family: var(--serif);
+    font-weight: 600;
+    color: var(--ochre);
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Step items */
+.step-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    padding: 16px 16px 16px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.step-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--border);
+    transition: background 0.2s;
+}
+
+.step-item.completed::before {
+    background: var(--olive);
+}
+
+.step-item.completed {
+    background: rgba(107, 142, 35, 0.04);
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-time {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--terracotta);
+    letter-spacing: -0.3px;
+    min-width: 60px;
+    font-variant-numeric: tabular-nums;
+}
+
+.step-item.completed .step-time {
+    color: var(--ink-faint);
+    text-decoration: line-through;
+}
+
+.step-title {
+    flex: 1;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    letter-spacing: -0.1px;
+    line-height: 1.35;
+}
+
+.step-item.completed .step-title {
+    color: var(--ink-faint);
+}
+
+.step-check {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: var(--bg-card);
+}
+
+.step-item.completed .step-check {
+    background: var(--olive);
+    border-color: var(--olive);
+}
+
+.step-check svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--bg-card);
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+}
+
+.step-item.completed .step-check svg {
+    opacity: 1;
+}
+
+.step-detail {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-soft);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+}
+
+.step-item.expanded .step-detail {
+    display: block;
+}
+
+.step-detail strong {
+    color: var(--forest);
+    font-weight: 600;
+}
+
+.step-detail .container-info {
+    background: var(--cream);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--ink);
+    border-left: 3px solid var(--ochre);
+}
+
+.step-detail .container-info-label {
+    font-weight: 600;
+    color: var(--forest);
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.step-detail .cooling-info {
+    background: rgba(197, 107, 62, 0.1);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--ink);
+    border-left: 3px solid var(--terracotta);
+}
+
+.step-detail .cooling-info-label {
+    font-weight: 600;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* Storage view */
+.storage-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 14px;
+}
+
+.storage-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.storage-title::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--ochre);
+    border-radius: 50%;
+}
+
+.storage-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13.5px;
+}
+
+.storage-item:last-child {
+    border-bottom: none;
+}
+
+.storage-food {
+    color: var(--ink);
+    font-weight: 500;
+}
+
+.storage-duration {
+    color: var(--ink-faint);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    font-size: 12.5px;
+}
+
+/* =================== MODAL =================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 41, 24, 0.55);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+    animation: fadeIn 0.2s ease;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: var(--bg);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.modal-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 18px;
+}
+
+.modal-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+}
+
+.modal-subtitle {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+}
+
+.user-option {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    text-align: left;
+    font-family: var(--sans);
+}
+
+.user-option.selected {
+    border-color: var(--forest);
+    background: rgba(107, 142, 35, 0.06);
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--forest);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.user-option[data-user="J"] .user-avatar {
+    background: var(--plum);
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 2px;
+}
+
+.user-meta {
+    font-size: 12px;
+    color: var(--ink-faint);
+}
+
+/* Export modal */
+.export-option {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    text-align: left;
+    font-family: var(--sans);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.export-option:active {
+    background: var(--cream);
+}
+
+.export-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.export-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--forest);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.export-info {
+    flex: 1;
+}
+
+.export-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 2px;
+}
+
+.export-desc {
+    font-size: 12px;
+    color: var(--ink-faint);
+}
+
+.json-display {
+    background: var(--ink);
+    color: #B8D4A8;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    margin-top: 14px;
+    max-height: 280px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border: 1px solid var(--ink-soft);
+}
+
+.copy-btn {
+    background: var(--forest);
+    color: var(--bg);
+    border: none;
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    margin-top: 12px;
+    width: 100%;
+}
+
+.copy-btn:active {
+    background: var(--forest-light);
+}
+
+.copy-btn.copied {
+    background: var(--olive);
+}
+
+/* =================== DEDICATION =================== */
+.dedication {
+    margin: 40px 0 20px;
+    padding: 24px 20px;
+    text-align: center;
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+    background: var(--cream);
+    border-radius: var(--radius);
+}
+
+.dedication-symbol {
+    font-family: var(--serif);
+    font-size: 24px;
+    color: var(--olive);
+    margin-bottom: 6px;
+}
+
+.dedication-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+}
+
+.dedication-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    color: var(--forest);
+    display: block;
+    margin-top: 4px;
+    font-style: normal;
+}
+
+/* =================== ACCESSIBILITY =================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        padding-bottom: 0;
+    }
+    
+    nav.tabs {
+        position: sticky;
+        top: 0;
+        max-width: 720px;
+        margin: 0 auto;
+        border-radius: 0 0 var(--radius) var(--radius);
+        box-shadow: var(--shadow-sm);
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- =================== HEADER =================== -->
+<header>
+    <div class="header-top">
+        <div class="logo">
+            <span class="logo-mark">NutriTrack</span>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="openExportModal()" aria-label="Exportar datos">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+            <button class="user-pill" id="userPill" onclick="openUserModal()">E · Emmanuel</button>
+        </div>
+    </div>
+    <div class="memorial">En memoria de Yessica Cárdenas · nutrióloga</div>
+</header>
+
+<!-- =================== MAIN CONTENT =================== -->
+<main>
+
+    <!-- ========== VIEW 1: SHOPPING ========== -->
+    <section class="view active" id="view-shopping">
+        <h1 class="section-title">Compra <em>semanal</em></h1>
+        <p class="section-subtitle">Semana del lunes 20 al sábado 25 de abril. Marca conforme vas tomando los productos del estante.</p>
+        
+        <div class="progress-banner">
+            <div class="progress-number"><span id="shopDone">0</span><small>/<span id="shopTotal">0</span></small></div>
+            <div class="progress-label">productos en el carrito</div>
+            <div class="progress-bar"><div class="progress-fill" id="shopProgress" style="width: 0%;"></div></div>
+        </div>
+        
+        <div id="shoppingCategories"></div>
+        
+        <button class="reset-btn" onclick="resetShopping()">↻ Reiniciar lista para nueva semana</button>
+    </section>
+
+    <!-- ========== VIEW 2: MEALS ========== -->
+    <section class="view" id="view-meals">
+        <div class="day-header">
+            <div class="day-info">
+                <div class="day-number" id="dayNumber">—</div>
+                <div class="day-month" id="dayMonth">—</div>
+            </div>
+            <div class="day-stats">
+                <div class="stat-value"><span id="mealsDone">0</span>/5</div>
+                <div class="stat-label">comidas del día</div>
+            </div>
+        </div>
+        
+        <div class="date-nav" id="dateNav"></div>
+        
+        <div id="mealsList"></div>
+    </section>
+
+    <!-- ========== VIEW 3: MEAL PREP ========== -->
+    <section class="view" id="view-prep">
+        <h1 class="section-title">Meal <em>prep</em></h1>
+        <p class="section-subtitle">Domingo 19 de abril, 5:00 p. m. · sin arrocera ni olla exprés.</p>
+        
+        <div class="prep-intro">
+            <div class="prep-intro-title">Sesión dominical vespertina</div>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;">Compra el domingo por la mañana, ejecuta el meal prep a partir de las 5:00 p. m. Al terminar, la comida de toda la semana estará lista.</p>
+            <div class="prep-time-grid">
+                <div class="prep-time-item">
+                    <div class="prep-time-value">5:00</div>
+                    <div class="prep-time-label">inicio</div>
+                </div>
+                <div class="prep-time-item">
+                    <div class="prep-time-value">3.5</div>
+                    <div class="prep-time-label">horas</div>
+                </div>
+                <div class="prep-time-item">
+                    <div class="prep-time-value">8:30</div>
+                    <div class="prep-time-label">cierre</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="prep-tab-nav">
+            <button class="prep-tab active" data-tab="steps" onclick="switchPrepTab('steps', this)">Paso a paso</button>
+            <button class="prep-tab" data-tab="containers" onclick="switchPrepTab('containers', this)">Recipientes</button>
+            <button class="prep-tab" data-tab="storage" onclick="switchPrepTab('storage', this)">Almacenaje</button>
+        </div>
+        
+        <div class="prep-tab-content active" id="prep-steps">
+            <div id="stepsList"></div>
+            <button class="reset-btn" onclick="resetSteps()" style="margin-top: 12px;">↻ Reiniciar pasos para próximo domingo</button>
+        </div>
+        
+        <div class="prep-tab-content" id="prep-containers">
+            <!-- Lunchbox dimensions info card: shows the user their physical constraint upfront -->
+            <!-- so they understand which containers will fit and which stay home -->
+            <div class="lunchbox-card">
+                <div class="lunchbox-card-title">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+                    Dimensiones de la lonchera
+                </div>
+                <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.55;">Los recipientes del meal prep están dimensionados para encajar en sus loncheras sin necesidad de trasvasar alimentos por la mañana.</p>
+                <div class="lunchbox-dims">
+                    <div class="dim-cell">
+                        <div class="dim-value">20<small>cm</small></div>
+                        <div class="dim-label">Largo</div>
+                    </div>
+                    <div class="dim-cell">
+                        <div class="dim-value">15<small>cm</small></div>
+                        <div class="dim-label">Ancho</div>
+                    </div>
+                    <div class="dim-cell">
+                        <div class="dim-value">13<small>cm</small></div>
+                        <div class="dim-label">Alto</div>
+                    </div>
+                </div>
+                <div class="lunchbox-note">
+                    Capacidad útil aproximada de 3.9 litros por lonchera. Las frutas congeladas incluidas en yogures y colaciones actúan como refrigerante natural durante el traslado.
+                </div>
+            </div>
+
+            <!-- Portable containers: these travel daily to the lunchbox -->
+            <div class="storage-section">
+                <div class="storage-title">Recipientes portátiles · viajan en lonchera</div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Frascos mason jar 500 ml</div>
+                        <div class="pc-label-small">8 cm diámetro × 15 cm alto · yogurt con frutos congelados</div>
+                    </div>
+                    <div class="pc-fits">×12</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Frascos de vidrio 1 L</div>
+                        <div class="pc-label-small">10 cm diámetro × 18 cm alto · ensaladas en capas</div>
+                    </div>
+                    <div class="pc-fits">×10</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Frascos pequeños 250 ml</div>
+                        <div class="pc-label-small">7 cm diámetro × 10 cm alto · frutas y semillas de colación</div>
+                    </div>
+                    <div class="pc-fits">×10</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Recipiente rectangular pequeño</div>
+                        <div class="pc-label-small">15×10×5 cm · tostadas, sándwiches, porciones de proteína</div>
+                    </div>
+                    <div class="pc-fits">×4</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Botella o frasco para batidos</div>
+                        <div class="pc-label-small">500 ml · batidos proteicos de Jediael</div>
+                    </div>
+                    <div class="pc-fits">×2</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Bolsas de silicón pequeñas</div>
+                        <div class="pc-label-small">Porciones de frutos secos y crema de cacahuate</div>
+                    </div>
+                    <div class="pc-fits">×6</div>
+                </div>
+            </div>
+
+            <!-- Stationary containers: these remain in the fridge for in-home consumption -->
+            <div class="storage-section">
+                <div class="storage-title">Recipientes estacionarios · permanecen en casa</div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Recipientes herméticos grandes</div>
+                        <div class="pc-label-small">Arroz, quinoa, pollo cocinado, verduras horneadas</div>
+                    </div>
+                    <div class="pc-fits">×6</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Recipientes herméticos medianos</div>
+                        <div class="pc-label-small">Frijoles, huevos cocidos, hojas verdes lavadas</div>
+                    </div>
+                    <div class="pc-fits">×4</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Frascos 250 ml para salsas</div>
+                        <div class="pc-label-small">Salsa de jitomate, marinada chipotle, vinagreta</div>
+                    </div>
+                    <div class="pc-fits">×4</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Bolsas herméticas congelador</div>
+                        <div class="pc-label-small">Albóndigas crudas, salmón y pavo molido excedentes</div>
+                    </div>
+                    <div class="pc-fits">×10</div>
+                </div>
+                <div class="portable-container-item">
+                    <div>
+                        <div class="pc-label">Bandejas para hornear</div>
+                        <div class="pc-label-small">Uso en cocción, no almacenamiento</div>
+                    </div>
+                    <div class="pc-fits">×2</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="prep-tab-content" id="prep-storage">
+            <div id="storageList"></div>
+        </div>
+        
+        <div class="dedication">
+            <div class="dedication-symbol">✧</div>
+            <p class="dedication-text">
+                Este plan honra el trabajo de<br>
+                <span class="dedication-name">Yessica Cárdenas</span>
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<!-- =================== BOTTOM NAV =================== -->
+<nav class="tabs">
+    <button class="tab active" data-view="shopping" onclick="switchView('shopping', this)">
+        <svg viewBox="0 0 24 24"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6L23 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+        <span>Compras</span>
+    </button>
+    <button class="tab" data-view="meals" onclick="switchView('meals', this)">
+        <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4c0 2 1 4 3 4M4 4c0 2-1 4-3 4M20 4v16M16 4v8c0 2 2 2 4 2"/></svg>
+        <span>Comidas</span>
+    </button>
+    <button class="tab" data-view="prep" onclick="switchView('prep', this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span>Meal prep</span>
+    </button>
+</nav>
+
+<!-- =================== USER MODAL =================== -->
+<div class="modal-overlay" id="userModal" onclick="closeModal(event, 'userModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-handle"></div>
+        <h2 class="modal-title">¿Quién está registrando?</h2>
+        <p class="modal-subtitle">El registro de comidas se guarda por separado para cada uno.</p>
+        
+        <button class="user-option" data-user="E" onclick="selectUser('E')">
+            <div class="user-avatar">E</div>
+            <div class="user-info">
+                <div class="user-name">Emmanuel Vera</div>
+                <div class="user-meta">1,713 kcal · déficit calórico</div>
+            </div>
+        </button>
+        
+        <button class="user-option" data-user="J" onclick="selectUser('J')">
+            <div class="user-avatar">J</div>
+            <div class="user-info">
+                <div class="user-name">Jediael Machín</div>
+                <div class="user-meta">2,030 kcal · ganancia muscular</div>
+            </div>
+        </button>
+    </div>
+</div>
+
+<!-- =================== EXPORT MODAL =================== -->
+<div class="modal-overlay" id="exportModal" onclick="closeModal(event, 'exportModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-handle"></div>
+        <h2 class="modal-title">Exportar datos</h2>
+        <p class="modal-subtitle">Comparte tu progreso para recibir análisis y mejoras personalizadas.</p>
+        
+        <button class="export-option" onclick="showJsonExport()">
+            <div class="export-icon">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="export-info">
+                <div class="export-title">Ver datos en formato JSON</div>
+                <div class="export-desc">Copia y pega el texto para compartirlo</div>
+            </div>
+        </button>
+        
+        <button class="export-option" onclick="downloadJson()">
+            <div class="export-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div class="export-info">
+                <div class="export-title">Descargar archivo .json</div>
+                <div class="export-desc">Guarda un archivo en tu teléfono</div>
+            </div>
+        </button>
+        
+        <button class="export-option" onclick="showSummary()">
+            <div class="export-icon">
+                <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </div>
+            <div class="export-info">
+                <div class="export-title">Ver resumen legible</div>
+                <div class="export-desc">Vista rápida con estadísticas clave</div>
+            </div>
+        </button>
+        
+        <div id="jsonDisplayArea"></div>
+    </div>
+</div>
+
+<script>
+// ====================================================
+// DATA LAYER
+// ====================================================
+
+const APP_VERSION = "1.1.0";
+
+const SHOPPING_DATA = {
+    "Proteínas": [
+        { name: "Pechuga de pollo sin hueso", amount: "1.8 kg" },
+        { name: "Filete de res (bistec o arrachera)", amount: "600 g" },
+        { name: "Salmón en filete fresco", amount: "400 g" },
+        { name: "Filete de pescado blanco", amount: "400 g" },
+        { name: "Camarón crudo pelado", amount: "300 g" },
+        { name: "Huevo fresco", amount: "2 docenas" },
+        { name: "Atún en agua, lata", amount: "3 latas" },
+        { name: "Pechuga de pavo en rebanadas", amount: "300 g" },
+        { name: "Queso panela", amount: "400 g" },
+        { name: "Proteína en polvo (whey)", amount: "1 bote" }
+    ],
+    "Verduras": [
+        { name: "Espinaca baby", amount: "500 g" },
+        { name: "Lechuga romana o mixta", amount: "2 piezas" },
+        { name: "Arúgula", amount: "200 g" },
+        { name: "Calabacita verde", amount: "6 piezas" },
+        { name: "Brócoli", amount: "2 piezas" },
+        { name: "Pimiento morrón", amount: "4 piezas" },
+        { name: "Jitomate", amount: "1.5 kg" },
+        { name: "Pepino", amount: "4 piezas" },
+        { name: "Champiñones frescos", amount: "400 g" },
+        { name: "Nopales limpios", amount: "6 piezas" },
+        { name: "Zanahoria", amount: "500 g" },
+        { name: "Apio", amount: "1 manojo" },
+        { name: "Ejotes", amount: "300 g" },
+        { name: "Espárragos", amount: "1 manojo" },
+        { name: "Chile poblano", amount: "3 piezas" },
+        { name: "Cebollín / poro fresco", amount: "2 manojos" },
+        { name: "Ajo", amount: "2 cabezas" },
+        { name: "Limón", amount: "1 kg" },
+        { name: "Cilantro", amount: "1 manojo" },
+        { name: "Jengibre fresco", amount: "1 trozo" }
+    ],
+    "Frutas": [
+        { name: "Fresas congeladas", amount: "500 g" },
+        { name: "Frambuesas congeladas", amount: "300 g" },
+        { name: "Arándanos / blueberries congelados", amount: "300 g" },
+        { name: "Manzana verde", amount: "6 piezas" },
+        { name: "Papaya", amount: "1 pieza" },
+        { name: "Piña", amount: "1 pieza" },
+        { name: "Kiwi", amount: "6 piezas" },
+        { name: "Plátano", amount: "6 piezas" },
+        { name: "Mandarina o naranja", amount: "6 piezas" }
+    ],
+    "Cereales y leguminosas": [
+        { name: "Avena en hojuelas", amount: "500 g" },
+        { name: "Arroz integral", amount: "500 g" },
+        { name: "Tortilla de maíz", amount: "1 paquete" },
+        { name: "Pan integral multigrano", amount: "1 pieza" },
+        { name: "Camote", amount: "500 g" },
+        { name: "Quinoa", amount: "200 g" },
+        { name: "Frijol bayo o negro (en bote cocido)", amount: "2 botes" }
+    ],
+    "Lácteos": [
+        { name: "Yogurt griego natural sin azúcar", amount: "1 kg" },
+        { name: "Leche de almendra sin azúcar", amount: "1 L" }
+    ],
+    "Grasas y despensa": [
+        { name: "Aguacate", amount: "5 piezas" },
+        { name: "Aceite de oliva extra virgen", amount: "1 botella" },
+        { name: "Aceite en aerosol", amount: "1 lata" },
+        { name: "Aceitunas", amount: "1 frasco" },
+        { name: "Almendras naturales", amount: "200 g" },
+        { name: "Nuez de la India", amount: "150 g" },
+        { name: "Chía", amount: "100 g" },
+        { name: "Crema de cacahuate natural", amount: "1 frasco" },
+        { name: "Stevia o fruto del monje", amount: "1 paquete" }
+    ]
+};
+
+const WEEKLY_MENU = [
+    {
+        day: "Lunes",
+        meals: [
+            { time: "Desayuno", name: "Omelette con espinaca y panela", desc: "Omelette de claras + huevo entero con espinaca y queso panela. Tortilla tostada y aguacate.", E: "3 prot · 2 cereal · 1 verd · 1 grasa", J: "4 prot · 2 cereal · 1 verd · 1 grasa", portable: false },
+            { time: "Colación 1", name: "Yogurt con fresas y almendras", desc: "Yogurt griego con fresas congeladas descongeladas y almendras.", E: "1 lácteo · 1 fruta · 1 grasa c/p", J: "1 lácteo · 2 frutas · 1 grasa c/p", portable: true },
+            { time: "Comida", name: "Pollo a la plancha con ensalada mediterránea", desc: "Pollo con arroz integral, hojas verdes, jitomate cherry, pepino y aceitunas.", E: "6 prot · 2 cereal · 2 verd · 1 grasa", J: "8 prot · 4 cereal · 2 verd · 2 grasa", portable: true },
+            { time: "Colación 2", name: "Manzana con crema de cacahuate · Batido proteico", desc: "E: manzana con crema de cacahuate. J: batido de proteína con plátano.", E: "1 fruta · ½ grasa c/p", J: "3.5 prot", portable: true },
+            { time: "Cena", name: "Salmón al horno con calabacitas asadas", desc: "Salmón con calabacitas al horno, aderezadas con cebollín y limón. Tortillas tibias.", E: "4 prot · 2 cereal · 1 verd · 1 grasa", J: "5 prot · 2 cereal · 1 verd · 1 grasa", portable: false }
+        ]
+    },
+    {
+        day: "Martes",
+        meals: [
+            { time: "Desayuno", name: "Avena overnight con proteína y frutos rojos", desc: "Avena preparada la noche anterior con proteína, chía y frutos rojos congelados.", E: "3 prot · 2 cereal · 1 grasa", J: "4 prot · 2 cereal · 1 grasa", portable: false },
+            { time: "Colación 1", name: "Yogurt con piña y nuez de la India", desc: "Yogurt griego con piña fresca picada y mitades de nuez de la India.", E: "1 lácteo · 1 fruta · 1 grasa c/p", J: "1 lácteo · 2 frutas · 1 grasa c/p", portable: true },
+            { time: "Comida", name: "Arrachera con nopales y frijoles", desc: "Arrachera a la plancha con nopales asados y frijoles negros. Tortilla de maíz.", E: "6 prot · 2 cereal · 2 verd · 1 leg · 1 grasa", J: "8 prot · 4 cereal · 2 verd · 2 grasa", portable: true },
+            { time: "Colación 2", name: "Kiwi con almendras · Tostada de atún", desc: "E: kiwi con almendras. J: tostada integral con atún y aguacate.", E: "1 fruta · ½ grasa c/p", J: "3.5 prot", portable: true },
+            { time: "Cena", name: "Pollo al grill con ensalada de espinaca", desc: "Pechuga al grill con ensalada de espinaca baby y pan integral.", E: "4 prot · 2 cereal · 1 verd · 1 grasa", J: "5 prot · 2 cereal · 1 verd · 1 grasa", portable: false }
+        ]
+    },
+    {
+        day: "Miércoles",
+        meals: [
+            { time: "Desayuno", name: "Huevos con champiñones", desc: "Huevos revueltos con champiñones y pimiento. Tortilla y aguacate.", E: "3 prot · 2 cereal · 1 verd · 1 grasa", J: "4 prot · 2 cereal · 1 verd · 1 grasa", portable: false },
+            { time: "Colación 1", name: "Yogurt con papaya y chía", desc: "Yogurt griego con papaya fresca y semillas de chía.", E: "1 lácteo · 1 fruta · 1 grasa c/p", J: "1 lácteo · 2 frutas · 1 grasa c/p", portable: true },
+            { time: "Comida", name: "Tilapia al limón con quinoa", desc: "Tilapia al limón con quinoa y ensalada fresca.", E: "6 prot · 2 cereal · 2 verd · 1 grasa", J: "8 prot · 4 cereal · 2 verd · 2 grasa", portable: true },
+            { time: "Colación 2", name: "Mandarina con almendras · Smoothie", desc: "E: mandarina con almendras. J: smoothie proteico con fresas congeladas.", E: "1 fruta · ½ grasa c/p", J: "3.5 prot", portable: true },
+            { time: "Cena", name: "Stir-fry de pollo con verduras", desc: "Salteado de pollo con brócoli, pimientos y zanahoria. Arroz integral.", E: "4 prot · 2 cereal · 1 verd · 1 grasa", J: "5 prot · 2 cereal · 1 verd · 1 grasa", portable: false }
+        ]
+    },
+    {
+        day: "Jueves",
+        meals: [
+            { time: "Desayuno", name: "Hot cakes de avena y proteína", desc: "Hot cakes esponjosos de avena molida y proteína con frambuesas congeladas encima.", E: "3 prot · 2 cereal · 1 grasa", J: "4 prot · 2 cereal · 1 grasa", portable: false },
+            { time: "Colación 1", name: "Yogurt con manzana y chía", desc: "Yogurt griego con manzana verde picada y chía.", E: "1 lácteo · 1 fruta · 1 grasa c/p", J: "1 lácteo · 2 frutas · 1 grasa c/p", portable: true },
+            { time: "Comida", name: "Albóndigas de pavo en salsa", desc: "Albóndigas de pavo en salsa de jitomate con calabacita. Tortilla de maíz.", E: "6 prot · 2 cereal · 2 verd · 1 grasa", J: "8 prot · 4 cereal · 2 verd · 2 grasa", portable: true },
+            { time: "Colación 2", name: "Plátano con crema · Requesón con piña", desc: "E: plátano fresco con crema de cacahuate. J: requesón con piña.", E: "1 fruta · ½ grasa c/p", J: "3.5 prot", portable: true },
+            { time: "Cena", name: "Camarones al ajillo con espárragos", desc: "Camarones con ajo y espárragos. Arroz integral como base.", E: "4 prot · 2 cereal · 1 verd · 1 grasa", J: "5 prot · 2 cereal · 1 verd · 1 grasa", portable: false }
+        ]
+    },
+    {
+        day: "Viernes",
+        meals: [
+            { time: "Desayuno", name: "Tacos de huevo con pavo", desc: "Tacos de huevo con pechuga de pavo y aguacate. Fruta de temporada.", E: "3 prot · 2 cereal · 1 fruta · 1 grasa", J: "4 prot · 2 cereal · 1 grasa", portable: false },
+            { time: "Colación 1", name: "Yogurt con kiwi y almendras", desc: "Yogurt griego con kiwi fresco y almendras naturales.", E: "1 lácteo · 1 fruta · 1 grasa c/p", J: "1 lácteo · 2 frutas · 1 grasa c/p", portable: true },
+            { time: "Comida", name: "Pollo al chipotle", desc: "Pollo marinado al chipotle con arroz integral y ensalada.", E: "6 prot · 2 cereal · 2 verd · 1 grasa", J: "8 prot · 4 cereal · 2 verd · 2 grasa", portable: true },
+            { time: "Colación 2", name: "Fresas con nuez · Pan con atún", desc: "E: fresas congeladas con nuez de la India. J: pan integral con atún y aguacate.", E: "1 fruta · ½ grasa c/p", J: "3.5 prot", portable: true },
+            { time: "Cena", name: "Salmón a la mostaza", desc: "Salmón con glaseado de mostaza y ensalada tibia de brócoli.", E: "4 prot · 2 cereal · 1 verd · 1 grasa", J: "5 prot · 2 cereal · 1 verd · 1 grasa", portable: false }
+        ]
+    },
+    {
+        day: "Sábado",
+        meals: [
+            { time: "Desayuno", name: "Huevos al albañil con panela", desc: "Huevos estilo ranchero (suave) con queso panela. Tortillas de maíz.", E: "3 prot · 2 cereal · 1 verd · 1 grasa", J: "4 prot · 2 cereal · 1 verd · 1 grasa", portable: false },
+            { time: "Colación 1", name: "Smoothie de papaya", desc: "Smoothie cremoso de papaya con yogurt griego.", E: "1 lácteo · 1 fruta · 1 grasa c/p", J: "1 lácteo · 2 frutas · 1 grasa c/p", portable: false },
+            { time: "Comida", name: "Fajitas de res con pimientos", desc: "Fajitas de res con pimientos, cebollín, guacamole y tortilla de maíz.", E: "6 prot · 2 cereal · 2 verd · 1 grasa", J: "8 prot · 4 cereal · 2 verd · 2 grasa", portable: false },
+            { time: "Colación 2", name: "Manzana con almendras · Batido", desc: "E: manzana con almendras. J: batido de proteína con frutos rojos.", E: "1 fruta · ½ grasa c/p", J: "3.5 prot", portable: false },
+            { time: "Cena", name: "Pescado empapelado", desc: "Pescado empapelado con verduras al vapor dentro del paquete. Arroz. Al terminar: actualización de recetas y meal prep de siguiente ciclo.", E: "4 prot · 2 cereal · 1 verd · 1 grasa", J: "5 prot · 2 cereal · 1 verd · 1 grasa", portable: false }
+        ]
+    },
+    {
+        day: "Domingo",
+        isUpdateDay: true,
+        meals: []
+    }
+];
+
+const PREP_STEPS = [
+    {
+        time: "5:00",
+        title: "Mise en place inicial",
+        detail: "Saca todos los ingredientes del refrigerador. Llena dos ollas grandes con agua y ponlas a hervir a fuego alto para el <strong>arroz integral</strong> (3 tazas) y la <strong>quinoa</strong> (1 taza) en paralelo. Lava y centrifuga todas las hojas verdes mientras el agua rompe hervor.",
+        container: null,
+        cooling: null
+    },
+    {
+        time: "5:20",
+        title: "Cereales en olla tradicional",
+        detail: "Cuando hierva el agua, agrega el arroz integral (proporción 1:2.5, tapa y baja a fuego bajo, 40-45 min). En la otra olla pon la quinoa (proporción 1:2, tapa y cocina 15 min). <strong>Nota:</strong> supervisa el arroz en los últimos 5 minutos para evitar que se queme.",
+        container: "Al terminar, transfiere cada cereal a un recipiente hermético grande de vidrio cuando esté tibio. Etiqueta con el contenido y la fecha.",
+        cooling: "Deja enfriar 20 minutos a temperatura ambiente (máximo 30 min) antes de tapar y refrigerar. Taparlo caliente genera condensación y acelera el deterioro."
+    },
+    {
+        time: "5:30",
+        title: "Precalentar horno y cortar verduras",
+        detail: "Precalienta el horno a 200°C. Corta camote en cubos pequeños, pimientos en tiras, calabacitas en medias lunas, brócoli en floretes. Separa todo en bandejas.",
+        container: null,
+        cooling: null
+    },
+    {
+        time: "5:45",
+        title: "Bandeja de vegetales al horno",
+        detail: "Acomoda camote + pimientos + calabacitas en una sola bandeja grande. Rocía con aceite en aerosol, añade ajo en polvo, paprika y pimienta. Hornea 25 minutos, volteando a la mitad.",
+        container: "Una vez frías, transfiere las verduras a un recipiente hermético grande de vidrio. Para conservar textura, coloca una capa de papel absorbente en el fondo.",
+        cooling: "Enfría a temperatura ambiente 15-20 minutos sobre la misma bandeja (sin taparlas). Tapar las verduras calientes las reblandece por el vapor."
+    },
+    {
+        time: "6:00",
+        title: "Sazonar y marinar proteínas",
+        detail: "Divide las pechugas de pollo en tres grupos: <strong>1)</strong> plancha simple con ajo y hierbas, <strong>2)</strong> marinada chipotle (adobo suave + limón), <strong>3)</strong> reservada para rostizar. Marina la arrachera con limón, ajo y aceite.",
+        container: "Los grupos 2 y 3 (sin cocinar aún) van en bolsas herméticas o recipientes con tapa al refrigerador mientras se trabaja. La arrachera marinada también va en bolsa hermética.",
+        cooling: null
+    },
+    {
+        time: "6:15",
+        title: "Pollo en air fryer",
+        detail: "Mete las pechugas del grupo 1 (plancha) al air fryer a 180°C por 18-20 minutos. Mientras, retira las verduras del horno cuando estén listas.",
+        container: "Al estar cocinadas, transfiere las pechugas a un recipiente hermético grande. Córtalas solo al momento de consumir para preservar jugosidad.",
+        cooling: "Deja reposar el pollo 5 minutos tras salir del air fryer para que los jugos se redistribuyan. Luego enfría 15 minutos antes de refrigerar."
+    },
+    {
+        time: "6:20",
+        title: "Frijoles cocidos desde bote",
+        detail: "Sin olla exprés, usamos frijoles ya cocidos en bote. Drena, enjuaga y calienta en olla con ajo y cebollín (omite cebolla para Emmanuel). Sazona con pimienta y comino. Cocina 10 minutos a fuego bajo.",
+        container: "Transfiere los frijoles con parte de su caldo a un recipiente hermético mediano. El caldo ayuda a conservar la humedad durante la semana.",
+        cooling: "Enfría 15 minutos destapados antes de refrigerar."
+    },
+    {
+        time: "6:40",
+        title: "Huevos cocidos en olla",
+        detail: "Cuece 10 huevos en olla tradicional: agua fría, sube a ebullición, baja a fuego medio y cuece 10 minutos. Al terminar, pasa a bowl con agua y hielo para detener la cocción.",
+        container: "Una vez fríos (5 minutos en el agua con hielo), sécalos con papel absorbente y guárdalos con cáscara en un recipiente hermético mediano. Pelar hasta el momento de consumir.",
+        cooling: "El choque térmico con agua fría es obligatorio: detiene la cocción, facilita el pelado y extiende la vida útil."
+    },
+    {
+        time: "7:00",
+        title: "Salmón y pescado blanco al horno",
+        detail: "En una bandeja con papel aluminio, acomoda el <strong>salmón</strong> (para lunes) y <strong>pescado blanco</strong> (para miércoles) sazonados. Hornea a 200°C por 12-15 minutos.",
+        container: "Cada pescado en un recipiente hermético mediano por separado para evitar mezcla de sabores. El salmón crudo excedente va en bolsa hermética al congelador, etiquetada con fecha.",
+        cooling: "Enfría los pescados cocinados 15-20 minutos sin tapar. El pescado es especialmente sensible a la condensación; no lo tapes caliente."
+    },
+    {
+        time: "7:15",
+        title: "Preparar albóndigas de pavo crudas",
+        detail: "Mezcla pavo molido con huevo, avena molida como pan rallado, perejil y especias. Forma bolitas de 30g cada una. Colócalas en bandeja separadas, congela 30 min, luego pásalas a bolsa etiquetada (se cocinarán el jueves).",
+        container: "Pre-congelación individual sobre bandeja con papel encerado (30 min), luego transfiere a bolsa de silicón reutilizable o bolsa hermética para congelador. Así no se pegan entre sí.",
+        cooling: null
+    },
+    {
+        time: "7:30",
+        title: "Porcionar yogurt con frutos congelados (portable)",
+        detail: "Llena <strong>12 frascos</strong> de vidrio de 500 ml con yogurt griego (6 para cada uno de ustedes, correspondientes a las colaciones de lunes a sábado). <strong>Importante:</strong> agrega los frutos congelados (fresas, frambuesas, arándanos) directamente; se irán descongelando lentamente en refri y estarán jugosos al momento de consumir. Agrega almendras o chía según el día del menú. <strong>Nota:</strong> el sábado la colación 1 es smoothie de papaya en casa, por lo que no requiere frasco portátil.",
+        container: "Frascos de vidrio 500 ml con tapa hermética rosca (mason jar). Estas medidas (8 cm diámetro × 15 cm alto) encajan perfectamente vertical en las loncheras de 20×15×13 cm. <strong>Destino: lonchera</strong> — cada frasco viaja directamente del refri a la lonchera por la mañana.",
+        cooling: "Refrigeración inmediata. No requiere enfriado previo porque los ingredientes están fríos.",
+        portable: true
+    },
+    {
+        time: "7:45",
+        title: "Preparar ensaladas en frasco (portable)",
+        detail: "Prepara <strong>10 frascos</strong> de vidrio de 1 L con capas en este orden: <strong>1)</strong> aderezo al fondo, <strong>2)</strong> verduras duras (zanahoria, pepino, jitomate), <strong>3)</strong> proteína, <strong>4)</strong> cereal si aplica, <strong>5)</strong> hojas verdes arriba. <strong>El aguacate NO se incluye</strong>; se agrega al momento de consumir. Esto cubre las comidas principales portátiles de lunes a viernes para ambos (5 días × 2 personas).",
+        container: "Frascos de vidrio 1 L con tapa hermética (10 cm diámetro × 18 cm alto). Encajan ligeramente inclinados en la lonchera de 13 cm de alto, o en posición vertical si la tapa de la lonchera tiene holgura. El orden de capas aísla las hojas verdes del aderezo y garantiza frescura hasta 5 días. <strong>Destino: lonchera</strong> — transporte directo desde el refrigerador.",
+        cooling: "Refrigeración inmediata. Las hojas deben estar perfectamente secas antes de colocarlas arriba.",
+        portable: true
+    },
+    {
+        time: "7:55",
+        title: "Porcionar colaciones 2 para lonchera",
+        detail: "Prepara <strong>10 contenedores pequeños</strong> (5 por persona, lunes a viernes) con las colaciones 2 personalizadas. Para Emmanuel: rebanadas de manzana con crema de cacahuate el lunes, kiwi rebanado con almendras el martes, gajos de mandarina con almendras el miércoles, plátano en rodajas con crema de cacahuate el jueves, fresas congeladas con nuez de la India el viernes. Para Jediael: batido preparado en botella el lunes, ingredientes listos de tostada de atún el martes, ingredientes de smoothie el miércoles, requesón con piña el jueves, pan integral con atún y aguacate el viernes. <strong>Nota:</strong> el sábado las colaciones se consumen en casa, no requieren porcionado portátil.",
+        container: "Frascos pequeños de vidrio 250 ml para frutas y semillas (7 cm diámetro × 10 cm alto, caben varios lado a lado en la lonchera). Recipientes herméticos rectangulares pequeños (15×10×5 cm) para tostadas y sándwiches. Botella térmica o frasco para batidos de Jediael. <strong>Destino: lonchera</strong>. Las fresas y frambuesas congeladas mantienen frío el resto del contenido durante la mañana, funcionando como hielera natural.",
+        cooling: "Los ingredientes ya están fríos. Las frutas congeladas, al ir incluidas, hacen las veces de elemento refrigerante natural en la lonchera durante el traslado.",
+        portable: true
+    },
+    {
+        time: "8:05",
+        title: "Salsas base y porciones de grasa",
+        detail: "Prepara: <strong>salsa de jitomate</strong> para albóndigas (jitomate + ajo + cebollín + laurel), <strong>marinada chipotle</strong>, <strong>vinagreta</strong> (aceite oliva + limón + mostaza Dijon). Porciona en bolsas pequeñas: 10 almendras por ración, 15 mitades de nuez de la India por ración, porciones de crema de cacahuate.",
+        container: "Frascos pequeños de vidrio de 250 ml con tapa hermética para salsas (permanecen en casa, uso diario al ensamblar). Bolsas herméticas pequeñas para frutos secos porcionados, integradas a cada lonchera junto a la colación correspondiente.",
+        cooling: "Las salsas cocinadas requieren enfriado de 20 minutos antes de refrigerar. Los frutos secos ya están fríos, refrigerar inmediatamente.",
+        portable: false
+    },
+    {
+        time: "8:15",
+        title: "Etiquetar y organizar el refrigerador",
+        detail: "Etiqueta TODO con día, contenido y destinatario usando etiquetas removibles. Organiza el refrigerador diferenciando contenedores portátiles y estacionarios: <strong>zona frontal del estante superior</strong> para frascos de lonchera (yogurt, ensaladas, colaciones 2) agrupados por día para toma rápida en las mañanas, <strong>zona trasera del estante superior</strong> para cenas pre-ensambladas, <strong>zona media</strong> para proteínas cocinadas a granel, <strong>cajón inferior</strong> para verduras crudas, <strong>puerta</strong> para salsas y aderezos de uso diario.",
+        container: "Revisa que todos los recipientes tengan cierre hermético adecuado. Los frascos destinados a lonchera deben estar al frente para tomarlos sin buscar. Recipientes con goma deteriorada deben reemplazarse para evitar pérdida de frescura.",
+        cooling: null,
+        portable: false
+    },
+    {
+        time: "8:30",
+        title: "Cierre y limpieza",
+        detail: "Lava utensilios, desinfecta superficies y verifica que el refrigerador esté entre 1°C y 4°C. Revisa las etiquetas una última vez. El meal prep de la semana está completo. <strong>Recordatorio:</strong> el sábado 25 por la noche se realizará la actualización de recetas y el siguiente ciclo de meal prep.",
+        container: null,
+        cooling: null,
+        portable: false
+    }
+];
+
+const STORAGE_DATA = [
+    {
+        title: "Proteínas",
+        items: [
+            { food: "Pollo cocinado", dur: "3-4 días refri · 3 meses congel" },
+            { food: "Salmón cocinado", dur: "2 días refri · 1 mes congel" },
+            { food: "Pescado blanco cocinado", dur: "2 días refri · 1 mes congel" },
+            { food: "Pescado crudo", dur: "1-2 días refri · 2-3 meses congel" },
+            { food: "Carne de res cocinada", dur: "3-4 días refri · 2-3 meses congel" },
+            { food: "Albóndigas de pavo crudas", dur: "1-2 días refri · 3-4 meses congel" },
+            { food: "Camarón crudo", dur: "1-2 días refri · 3-6 meses congel" },
+            { food: "Huevos cocidos con cáscara", dur: "7 días refri" }
+        ]
+    },
+    {
+        title: "Cereales y leguminosas",
+        items: [
+            { food: "Arroz integral cocido", dur: "4-5 días refri · 1 mes congel" },
+            { food: "Quinoa cocida", dur: "4-5 días refri · 1 mes congel" },
+            { food: "Frijoles cocidos", dur: "4-5 días refri · 3 meses congel" }
+        ]
+    },
+    {
+        title: "Verduras y frutas",
+        items: [
+            { food: "Verduras asadas", dur: "4-5 días refri" },
+            { food: "Verduras crudas picadas", dur: "3-4 días refri" },
+            { food: "Hojas verdes lavadas", dur: "5-7 días refri" },
+            { food: "Frutas congeladas en bolsa sellada", dur: "6-8 meses congel" },
+            { food: "Frutas frescas picadas", dur: "2-3 días refri" }
+        ]
+    },
+    {
+        title: "Preparaciones",
+        items: [
+            { food: "Salsa de jitomate", dur: "5 días refri · 3 meses congel" },
+            { food: "Guacamole", dur: "1-2 días refri (con limón encima)" },
+            { food: "Yogurt porcionado con fruta congelada", dur: "5-7 días refri" },
+            { food: "Overnight oats", dur: "3 días refri" },
+            { food: "Ensalada en frasco", dur: "5 días refri (aguacate aparte)" },
+            { food: "Vinagretas caseras", dur: "2 semanas refri" }
+        ]
+    }
+];
+
+// ====================================================
+// STATE MANAGEMENT (localStorage)
+// ====================================================
+
+const STORAGE_KEY = "nutritrack_v1";
+
+function getState() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+        try { 
+            const parsed = JSON.parse(raw);
+            // Always reset selectedDayIndex to null on app load.
+            // This ensures that opening the app always starts at "today",
+            // regardless of which day was last tapped in a previous session.
+            // The selection is session-only; it should not persist across app opens.
+            parsed.selectedDayIndex = null;
+            return parsed;
+        } catch(e) {}
+    }
+    return {
+        currentUser: "E",
+        shopping: {},
+        prepSteps: {},
+        meals: {},
+        selectedDayIndex: null,
+        firstUseDate: new Date().toISOString()
+    };
+}
+
+function setState(updater) {
+    const current = getState();
+    const next = typeof updater === "function" ? updater(current) : { ...current, ...updater };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    return next;
+}
+
+let state = getState();
+if (!state.firstUseDate) {
+    state = setState({ firstUseDate: new Date().toISOString() });
+}
+
+// ====================================================
+// VIEW SWITCHING
+// ====================================================
+
+function switchView(viewName, btn) {
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.querySelectorAll("nav.tabs .tab").forEach(t => t.classList.remove("active"));
+    document.getElementById("view-" + viewName).classList.add("active");
+    if (btn) btn.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function switchPrepTab(tabName, btn) {
+    document.querySelectorAll(".prep-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".prep-tab-content").forEach(c => c.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    document.getElementById("prep-" + tabName).classList.add("active");
+}
+
+// ====================================================
+// MODALS
+// ====================================================
+
+function openUserModal() {
+    document.getElementById("userModal").classList.add("active");
+    document.querySelectorAll(".user-option").forEach(opt => {
+        opt.classList.toggle("selected", opt.dataset.user === state.currentUser);
+    });
+}
+
+function openExportModal() {
+    document.getElementById("exportModal").classList.add("active");
+    document.getElementById("jsonDisplayArea").innerHTML = "";
+}
+
+function closeModal(e, modalId) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById(modalId).classList.remove("active");
+}
+
+function selectUser(user) {
+    state = setState({ currentUser: user });
+    updateUserPill();
+    renderMeals();
+    document.getElementById("userModal").classList.remove("active");
+}
+
+function updateUserPill() {
+    const pill = document.getElementById("userPill");
+    const name = state.currentUser === "E" ? "Emmanuel" : "Jediael";
+    pill.textContent = `${state.currentUser} · ${name}`;
+}
+
+// ====================================================
+// SHOPPING LIST
+// ====================================================
+
+function renderShopping() {
+    const container = document.getElementById("shoppingCategories");
+    let total = 0, done = 0;
+    let html = "";
+    
+    for (const [category, items] of Object.entries(SHOPPING_DATA)) {
+        let categoryDone = 0;
+        let itemsHtml = "";
+        
+        items.forEach((item, idx) => {
+            const key = `${category}__${idx}`;
+            const isChecked = state.shopping[key] === true;
+            if (isChecked) { done++; categoryDone++; }
+            total++;
+            
+            itemsHtml += `
+                <li class="item ${isChecked ? "checked" : ""}" onclick="toggleShoppingItem('${key}')">
+                    <div class="checkbox">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-amount">${item.amount}</div>
+                    </div>
+                </li>
+            `;
+        });
+        
+        html += `
+            <div class="category-group">
+                <div class="category-header">
+                    <span class="category-name">${category}</span>
+                    <span class="category-count">${categoryDone}/${items.length}</span>
+                </div>
+                <ul class="item-list">${itemsHtml}</ul>
+            </div>
+        `;
+    }
+    
+    container.innerHTML = html;
+    document.getElementById("shopDone").textContent = done;
+    document.getElementById("shopTotal").textContent = total;
+    const pct = total > 0 ? (done / total) * 100 : 0;
+    document.getElementById("shopProgress").style.width = pct + "%";
+}
+
+function toggleShoppingItem(key) {
+    state = setState(s => {
+        s.shopping[key] = !s.shopping[key];
+        return s;
+    });
+    renderShopping();
+}
+
+function resetShopping() {
+    if (!confirm("¿Reiniciar toda la lista de compras? Esto desmarcará todos los productos.")) return;
+    state = setState({ shopping: {} });
+    renderShopping();
+}
+
+// ====================================================
+// MEALS TRACKING
+// ====================================================
+
+function getCurrentDayIndex() {
+    // This function returns the index (0-6) that corresponds to "today" within
+    // the visual week displayed in the date navigator.
+    //
+    // Week layout in the navigator: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+    //                               [ 0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ]
+    //
+    // JavaScript's getDay() returns: Sun=0, Mon=1, Tue=2, ..., Sat=6
+    //
+    // Mapping rules:
+    //   - If today is Monday (getDay=1) → index 0 in the navigator
+    //   - If today is Tuesday (getDay=2) → index 1
+    //   - ...
+    //   - If today is Saturday (getDay=6) → index 5
+    //   - If today is Sunday (getDay=0) → index 6 (update day at the end)
+    const today = new Date().getDay();
+    return today === 0 ? 6 : today - 1;
+}
+
+function renderDateNav() {
+    const container = document.getElementById("dateNav");
+    const today = new Date();
+    const todayIdx = getCurrentDayIndex();
+    
+    // Calculate the Monday that anchors the ACTIVE meal cycle
+    // 
+    // Key insight: for this user flow, Sunday is not the END of the past week
+    // but rather the START of the upcoming cycle (it's the prep day).
+    // 
+    // If today is Sunday, we want to show the UPCOMING week (tomorrow's Monday onwards),
+    // not the week that just ended. This reflects the operational mental model
+    // where Sunday bridges into the next consumption week.
+    const monday = new Date(today);
+    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    
+    if (dayOfWeek === 0) {
+        // Today is Sunday (prep day): the active Monday is TOMORROW
+        monday.setDate(today.getDate() + 1);
+    } else {
+        // Today is Monday through Saturday: the active Monday is this week's Monday
+        const diff = 1 - dayOfWeek;
+        monday.setDate(today.getDate() + diff);
+    }
+    
+    const selectedIdx = state.selectedDayIndex !== null ? state.selectedDayIndex : todayIdx;
+    
+    const dayNames = ["LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB", "DOM"];
+    let html = "";
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(monday);
+        date.setDate(monday.getDate() + i);
+        
+        // Sunday (index 6) is the update day and receives a distinctive visual treatment
+        // This reinforces the mental distinction between consumption days and preparation day
+        const isUpdateDay = WEEKLY_MENU[i].isUpdateDay === true;
+        const classes = [
+            "date-chip",
+            i === selectedIdx ? "active" : "",
+            i === todayIdx ? "today" : "",
+            isUpdateDay ? "update-day" : ""
+        ].filter(Boolean).join(" ");
+        
+        html += `
+            <div class="${classes}" onclick="selectDay(${i})">
+                <div class="date-chip-day">${dayNames[i]}</div>
+                <div class="date-chip-num">${date.getDate()}</div>
+            </div>
+        `;
+    }
+    container.innerHTML = html;
+    
+    const selectedDate = new Date(monday);
+    selectedDate.setDate(monday.getDate() + selectedIdx);
+    const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+    document.getElementById("dayNumber").textContent = selectedDate.getDate();
+    
+    // Different subtitle for update day to make the day's purpose explicit
+    const dayLabel = WEEKLY_MENU[selectedIdx].isUpdateDay 
+        ? `${monthNames[selectedDate.getMonth()]} · actualización`
+        : `${monthNames[selectedDate.getMonth()]} · ${WEEKLY_MENU[selectedIdx].day.toLowerCase()}`;
+    document.getElementById("dayMonth").textContent = dayLabel;
+}
+
+function selectDay(idx) {
+    // Important: we intentionally DO NOT persist selectedDayIndex to state.
+    // The selection only lasts for the current session, so that reopening the app
+    // on a new day automatically shows that day's meals instead of whatever was
+    // last selected. This prevents the confusing experience of opening the app
+    // on Tuesday and still seeing Monday because it was the last tapped day.
+    state.selectedDayIndex = idx;
+    renderMeals();
+}
+
+function renderMeals() {
+    const selectedIdx = state.selectedDayIndex !== null ? state.selectedDayIndex : getCurrentDayIndex();
+    const dayData = WEEKLY_MENU[selectedIdx];
+    const container = document.getElementById("mealsList");
+    
+    // Special handling for the update day (Sunday)
+    // On this day no meals are tracked; instead we show a banner explaining the day's purpose
+    if (dayData.isUpdateDay) {
+        container.innerHTML = `
+            <div class="update-day-banner">
+                <div class="update-day-title">Día de actualización y meal prep</div>
+                <div class="update-day-text">Hoy es domingo. No se registran comidas porque este día está dedicado a preparar el siguiente ciclo alimenticio: revisar recetas, hacer la compra por la mañana y ejecutar el meal prep a partir de las 5:00 p. m.</div>
+            </div>
+            <div class="empty-state" style="margin-top: 20px;">
+                <div class="empty-state-title">Ir a Meal prep</div>
+                <div class="empty-state-text">Usa la pestaña <strong>Meal prep</strong> para consultar el cronograma paso a paso de hoy.</div>
+            </div>
+        `;
+        document.getElementById("mealsDone").textContent = "—";
+        document.getElementById("mealsDone").parentElement.nextElementSibling.textContent = "día de preparación";
+        renderDateNav();
+        return;
+    }
+    
+    // Restore the normal stat label for regular consumption days
+    document.getElementById("mealsDone").parentElement.nextElementSibling.textContent = "comidas del día";
+    
+    let done = 0;
+    let html = "";
+    
+    dayData.meals.forEach((meal, mealIdx) => {
+        const key = `${state.currentUser}_${selectedIdx}_${mealIdx}`;
+        const isDone = state.meals[key] === true;
+        if (isDone) done++;
+        
+        const portions = state.currentUser === "E" ? meal.E : meal.J;
+        
+        // Render lunchbox badge only for portable meals
+        // The icon signals to the user that this meal is already packed and ready to grab
+        const lunchboxBadge = meal.portable ? `
+            <div class="lunchbox-badge">
+                <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+                Lonchera
+            </div>
+        ` : "";
+        
+        html += `
+            <div class="meal-card ${isDone ? "completed" : ""}">
+                <div class="meal-header">
+                    <div class="meal-title-group">
+                        <div class="meal-time">${meal.time}</div>
+                        <div class="meal-name">${meal.name}</div>
+                        ${lunchboxBadge}
+                    </div>
+                    <button class="meal-toggle" onclick="toggleMeal('${key}')" aria-label="Marcar comida">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    </button>
+                </div>
+                <div class="meal-desc">${meal.desc}</div>
+                <div class="portions">
+                    <span class="portion-tag"><strong>${state.currentUser}:</strong> ${portions}</span>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+    document.getElementById("mealsDone").textContent = done;
+    renderDateNav();
+}
+
+function toggleMeal(key) {
+    state = setState(s => {
+        s.meals[key] = !s.meals[key];
+        return s;
+    });
+    renderMeals();
+}
+
+// ====================================================
+// MEAL PREP STEPS
+// ====================================================
+
+function renderSteps() {
+    const container = document.getElementById("stepsList");
+    let html = "";
+    
+    PREP_STEPS.forEach((step, idx) => {
+        const key = `step_${idx}`;
+        const isDone = state.prepSteps[key] === true;
+        
+        let detailHtml = step.detail;
+        
+        if (step.container) {
+            detailHtml += `
+                <div class="container-info">
+                    <span class="container-info-label">Recipiente · sellado hermético</span>
+                    ${step.container}
+                </div>
+            `;
+        }
+        
+        if (step.cooling) {
+            detailHtml += `
+                <div class="cooling-info">
+                    <span class="cooling-info-label">Enfriado previo a refrigerar</span>
+                    ${step.cooling}
+                </div>
+            `;
+        }
+        
+        html += `
+            <div class="step-item ${isDone ? "completed" : ""}" id="step-${idx}">
+                <div class="step-header" onclick="toggleStepDetail(${idx})">
+                    <div class="step-time">${step.time}</div>
+                    <div class="step-title">${step.title}</div>
+                    <div class="step-check" onclick="event.stopPropagation(); toggleStep(${idx})">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                </div>
+                <div class="step-detail">${detailHtml}</div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+function toggleStepDetail(idx) {
+    const el = document.getElementById("step-" + idx);
+    el.classList.toggle("expanded");
+}
+
+function toggleStep(idx) {
+    const key = `step_${idx}`;
+    state = setState(s => {
+        s.prepSteps[key] = !s.prepSteps[key];
+        return s;
+    });
+    renderSteps();
+}
+
+function resetSteps() {
+    if (!confirm("¿Reiniciar el progreso del meal prep?")) return;
+    state = setState({ prepSteps: {} });
+    renderSteps();
+}
+
+function renderStorage() {
+    const container = document.getElementById("storageList");
+    let html = "";
+    
+    STORAGE_DATA.forEach(section => {
+        let itemsHtml = "";
+        section.items.forEach(item => {
+            itemsHtml += `
+                <div class="storage-item">
+                    <div class="storage-food">${item.food}</div>
+                    <div class="storage-duration">${item.dur}</div>
+                </div>
+            `;
+        });
+        
+        html += `
+            <div class="storage-section">
+                <div class="storage-title">${section.title}</div>
+                ${itemsHtml}
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+// ====================================================
+// EXPORT / SHARE FUNCTIONS
+// ====================================================
+
+function buildExportData() {
+    const userName = state.currentUser === "E" ? "Emmanuel Vera" : "Jediael Machín";
+    const exportDate = new Date().toISOString();
+    
+    // Shopping summary
+    const shoppingTotal = Object.values(SHOPPING_DATA).flat().length;
+    const shoppingChecked = Object.values(state.shopping).filter(v => v === true).length;
+    
+    // Meals summary (by user)
+    const mealsByUser = { E: {}, J: {} };
+    Object.entries(state.meals).forEach(([key, value]) => {
+        if (!value) return;
+        const [user, dayIdx, mealIdx] = key.split("_");
+        if (!mealsByUser[user][dayIdx]) mealsByUser[user][dayIdx] = [];
+        mealsByUser[user][dayIdx].push(parseInt(mealIdx));
+    });
+    
+    // Prep steps summary
+    const prepTotal = PREP_STEPS.length;
+    const prepChecked = Object.values(state.prepSteps).filter(v => v === true).length;
+    
+    // Detailed meal tracking per user
+    const detailedMeals = { E: [], J: [] };
+    ["E", "J"].forEach(userKey => {
+        WEEKLY_MENU.forEach((day, dayIdx) => {
+            day.meals.forEach((meal, mealIdx) => {
+                const key = `${userKey}_${dayIdx}_${mealIdx}`;
+                if (state.meals[key]) {
+                    detailedMeals[userKey].push({
+                        day: day.day,
+                        time: meal.time,
+                        meal: meal.name
+                    });
+                }
+            });
+        });
+    });
+    
+    return {
+        app: "NutriTrack",
+        version: APP_VERSION,
+        exportedAt: exportDate,
+        firstUseDate: state.firstUseDate || exportDate,
+        currentUser: {
+            code: state.currentUser,
+            name: userName
+        },
+        summary: {
+            shopping: {
+                checked: shoppingChecked,
+                total: shoppingTotal,
+                completion: `${Math.round((shoppingChecked / shoppingTotal) * 100)}%`
+            },
+            mealPrep: {
+                stepsCompleted: prepChecked,
+                stepsTotal: prepTotal,
+                completion: `${Math.round((prepChecked / prepTotal) * 100)}%`
+            },
+            mealsTracked: {
+                Emmanuel: detailedMeals.E.length,
+                Jediael: detailedMeals.J.length,
+                total: detailedMeals.E.length + detailedMeals.J.length
+            }
+        },
+        detailedMeals: detailedMeals,
+        rawState: state
+    };
+}
+
+function showJsonExport() {
+    const data = buildExportData();
+    const json = JSON.stringify(data, null, 2);
+    document.getElementById("jsonDisplayArea").innerHTML = `
+        <div class="json-display">${json.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+        <button class="copy-btn" onclick="copyJsonToClipboard(this)">Copiar al portapapeles</button>
+    `;
+}
+
+function copyJsonToClipboard(btn) {
+    const data = buildExportData();
+    const json = JSON.stringify(data, null, 2);
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(json).then(() => {
+            btn.textContent = "✓ Copiado";
+            btn.classList.add("copied");
+            setTimeout(() => {
+                btn.textContent = "Copiar al portapapeles";
+                btn.classList.remove("copied");
+            }, 2000);
+        });
+    } else {
+        // Fallback
+        const textarea = document.createElement("textarea");
+        textarea.value = json;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand("copy");
+            btn.textContent = "✓ Copiado";
+            btn.classList.add("copied");
+        } catch (e) {}
+        document.body.removeChild(textarea);
+    }
+}
+
+function downloadJson() {
+    const data = buildExportData();
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const fileName = `nutritrack-${state.currentUser}-${new Date().toISOString().split("T")[0]}.json`;
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
+    
+    document.getElementById("jsonDisplayArea").innerHTML = `
+        <div style="background: rgba(107, 142, 35, 0.1); border-left: 3px solid var(--olive); padding: 14px; border-radius: var(--radius-sm); font-size: 13px; margin-top: 14px; color: var(--ink);">
+            <strong style="color: var(--forest);">Archivo descargado</strong><br>
+            Busca <code style="background: var(--cream); padding: 2px 6px; border-radius: 4px; font-size: 11px;">${fileName}</code> en tu carpeta de descargas.
+        </div>
+    `;
+}
+
+function showSummary() {
+    const data = buildExportData();
+    const s = data.summary;
+    
+    const emmanuelMeals = data.detailedMeals.E;
+    const jedielMeals = data.detailedMeals.J;
+    
+    const mealsByDayE = {};
+    const mealsByDayJ = {};
+    emmanuelMeals.forEach(m => { mealsByDayE[m.day] = (mealsByDayE[m.day] || 0) + 1; });
+    jedielMeals.forEach(m => { mealsByDayJ[m.day] = (mealsByDayJ[m.day] || 0) + 1; });
+    
+    let summaryHtml = `
+        <div style="background: var(--bg-card); border-radius: var(--radius); padding: 18px; margin-top: 14px; border: 1px solid var(--border-soft);">
+            <div style="font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 14px;">Resumen de uso</div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px;">
+                <div style="background: var(--cream); padding: 12px; border-radius: var(--radius-sm); text-align: center;">
+                    <div style="font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--forest); line-height: 1;">${s.shopping.completion}</div>
+                    <div style="font-size: 10px; color: var(--ink-soft); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Compras</div>
+                </div>
+                <div style="background: var(--cream); padding: 12px; border-radius: var(--radius-sm); text-align: center;">
+                    <div style="font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--forest); line-height: 1;">${s.mealPrep.completion}</div>
+                    <div style="font-size: 10px; color: var(--ink-soft); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Meal prep</div>
+                </div>
+                <div style="background: var(--cream); padding: 12px; border-radius: var(--radius-sm); text-align: center;">
+                    <div style="font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--forest); line-height: 1;">${s.mealsTracked.total}</div>
+                    <div style="font-size: 10px; color: var(--ink-soft); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Comidas</div>
+                </div>
+            </div>
+            
+            <div style="font-size: 13px; color: var(--ink); line-height: 1.7;">
+                <strong style="color: var(--forest);">Emmanuel:</strong> ${s.mealsTracked.Emmanuel} comidas registradas<br>
+                <strong style="color: var(--plum);">Jediael:</strong> ${s.mealsTracked.Jediael} comidas registradas<br>
+                <strong style="color: var(--ink-soft);">Exportado:</strong> ${new Date(data.exportedAt).toLocaleString("es-MX")}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById("jsonDisplayArea").innerHTML = summaryHtml;
+}
+
+// ====================================================
+// INIT
+// ====================================================
+
+function init() {
+    updateUserPill();
+    renderShopping();
+    renderMeals();
+    renderSteps();
+    renderStorage();
+    
+    // Register service worker for offline
+    if ('serviceWorker' in navigator) {
+        const swCode = `
+            self.addEventListener('install', e => self.skipWaiting());
+            self.addEventListener('activate', e => self.clients.claim());
+            self.addEventListener('fetch', e => {
+                e.respondWith(
+                    caches.open('nutritrack-v1').then(cache => 
+                        cache.match(e.request).then(r => r || fetch(e.request).then(resp => {
+                            cache.put(e.request, resp.clone());
+                            return resp;
+                        }).catch(() => cache.match('/')))
+                    )
+                );
+            });
+        `;
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        const swUrl = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(swUrl).catch(() => {});
+    }
+}
+
+init();
+</script>
+
+</body>
+</html>
