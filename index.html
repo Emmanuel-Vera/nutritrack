@@ -1045,6 +1045,58 @@ main {
 }
 
 /* Step items */
+/* =================== DAY SECTIONS IN PREP SCHEDULE =================== */
+/* Each day gets a header that groups its steps visually.
+   Main days (sunday, saturday night) use plum color.
+   Action days (mid-week) use terracotta. */
+.day-section {
+    margin-bottom: 24px;
+}
+
+.day-section-header {
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.day-section-main {
+    background: linear-gradient(135deg, var(--plum) 0%, #5C2F44 100%);
+    color: var(--bg);
+}
+
+.day-section-action {
+    background: linear-gradient(135deg, var(--terracotta) 0%, #A5542B 100%);
+    color: var(--bg);
+}
+
+.day-section-header::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 110px;
+    height: 110px;
+    background: radial-gradient(circle, rgba(232, 197, 71, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.day-section-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    margin-bottom: 4px;
+    line-height: 1.25;
+}
+
+.day-section-desc {
+    font-size: 12.5px;
+    opacity: 0.88;
+    line-height: 1.5;
+}
+
 .step-item {
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
@@ -1500,7 +1552,239 @@ main {
     font-style: normal;
 }
 
-/* =================== ACCESSIBILITY =================== */
+/* =================== RECIPE PANEL =================== */
+.recipe-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 7px 12px;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--olive);
+    cursor: pointer;
+    margin-top: 10px;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
+    width: 100%;
+    justify-content: center;
+}
+
+.recipe-toggle-btn:active {
+    background: var(--cream);
+}
+
+.recipe-toggle-btn svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s;
+}
+
+.recipe-toggle-btn.open svg {
+    transform: rotate(180deg);
+}
+
+.recipe-panel {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-soft);
+    animation: fadeIn 0.25s ease;
+}
+
+.recipe-panel.open {
+    display: block;
+}
+
+.recipe-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    margin-top: 14px;
+}
+
+.recipe-section-label:first-child {
+    margin-top: 0;
+}
+
+.recipe-ingredient-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+}
+
+.recipe-ingredient-row:last-child {
+    border-bottom: none;
+}
+
+.recipe-ing-name {
+    color: var(--ink);
+    font-weight: 500;
+}
+
+.recipe-ing-e {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--forest);
+    background: rgba(107, 142, 35, 0.1);
+    padding: 2px 7px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.recipe-ing-j {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--plum);
+    background: rgba(123, 63, 92, 0.1);
+    padding: 2px 7px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.recipe-ing-shared {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: var(--cream);
+    padding: 2px 7px;
+    border-radius: 999px;
+    white-space: nowrap;
+    grid-column: 2 / 4;
+}
+
+.recipe-step-item {
+    display: flex;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+}
+
+.recipe-step-item:last-child {
+    border-bottom: none;
+}
+
+.recipe-step-num {
+    font-family: var(--serif);
+    font-weight: 600;
+    color: var(--terracotta);
+    font-size: 14px;
+    min-width: 18px;
+    line-height: 1.4;
+}
+
+.recipe-note {
+    background: rgba(232, 197, 71, 0.15);
+    border-left: 3px solid var(--ochre);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-top: 10px;
+}
+
+.recipe-ing-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    padding: 4px 0 6px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 2px;
+}
+
+.recipe-ing-header span {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--ink-faint);
+}
+
+.recipe-ing-header .rih-e { color: var(--forest); }
+.recipe-ing-header .rih-j { color: var(--plum); }
+
+/* =================== FIREWORKS CANVAS =================== */
+#fireworksCanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+}
+
+.fireworks-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.fireworks-badge {
+    background: linear-gradient(135deg, var(--forest) 0%, var(--olive) 100%);
+    color: var(--bg);
+    padding: 22px 32px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    animation: badgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, badgeFade 0.5s ease 3.5s forwards;
+    pointer-events: none;
+}
+
+.fireworks-badge-emoji {
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.fireworks-badge-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+}
+
+.fireworks-badge-sub {
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+@keyframes badgePop {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes badgeFade {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -1570,7 +1854,7 @@ main {
             </div>
             <div class="day-stats">
                 <div class="stat-value"><span id="mealsDone">0</span>/5</div>
-                <div class="stat-label">comidas del día</div>
+                <div class="stat-label" id="mealsStatLabel">comidas del día</div>
             </div>
         </div>
         
@@ -1579,25 +1863,35 @@ main {
         <div id="mealsList"></div>
     </section>
 
+<!-- Fireworks canvas – always present in DOM, shown only on 100% shopping completion -->
+<canvas id="fireworksCanvas" style="display:none;"></canvas>
+<div class="fireworks-overlay" id="fireworksOverlay" style="display:none;">
+    <div class="fireworks-badge">
+        <span class="fireworks-badge-emoji">🛒</span>
+        <div class="fireworks-badge-title">¡Lista completa!</div>
+        <div class="fireworks-badge-sub">Todo listo para el meal prep</div>
+    </div>
+</div>
+
     <!-- ========== VIEW 3: MEAL PREP ========== -->
     <section class="view" id="view-prep">
         <h1 class="section-title">Meal <em>prep</em></h1>
-        <p class="section-subtitle">Domingo 19 de abril, 5:00 p. m. · sin arrocera ni olla exprés.</p>
+        <p class="section-subtitle">Sesión principal el domingo 19 a las 5:00 p. m. más acciones puntuales durante la semana para mantener la seguridad alimentaria.</p>
         
         <div class="prep-intro">
             <div class="prep-intro-title">Sesión dominical vespertina</div>
-            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;">Compra el domingo por la mañana, ejecuta el meal prep a partir de las 5:00 p. m. Al terminar, la comida de toda la semana estará lista.</p>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.6;">Compra el domingo por la mañana y ejecuta el meal prep a partir de las 5:00 p. m. El cronograma detallado está optimizado para seguridad alimentaria: cocinamos hoy solo lo que se consume en los próximos 3-4 días y dejamos el resto congelado crudo para cocinar fresco a media semana.</p>
             <div class="prep-time-grid">
                 <div class="prep-time-item">
                     <div class="prep-time-value">5:00</div>
                     <div class="prep-time-label">inicio</div>
                 </div>
                 <div class="prep-time-item">
-                    <div class="prep-time-value">3.5</div>
+                    <div class="prep-time-value">3.75</div>
                     <div class="prep-time-label">horas</div>
                 </div>
                 <div class="prep-time-item">
-                    <div class="prep-time-value">8:30</div>
+                    <div class="prep-time-value">8:45</div>
                     <div class="prep-time-label">cierre</div>
                 </div>
             </div>
@@ -1838,23 +2132,25 @@ const SHOPPING_DATA = {
     "Proteínas": [
         { name: "Pechuga de pollo sin hueso", amount: "1.8 kg" },
         { name: "Filete de res (bistec o arrachera)", amount: "600 g" },
-        { name: "Salmón en filete fresco", amount: "400 g" },
-        { name: "Filete de pescado blanco", amount: "400 g" },
+        { name: "Salmón en filete fresco", amount: "700 g" },
+        { name: "Filete de pescado blanco (robalo o tilapia)", amount: "900 g" },
         { name: "Camarón crudo pelado", amount: "300 g" },
-        { name: "Huevo fresco", amount: "2 docenas" },
+        { name: "Huevo fresco", amount: "4 docenas" },
         { name: "Atún en agua, lata", amount: "3 latas" },
         { name: "Pechuga de pavo en rebanadas", amount: "300 g" },
+        { name: "Pavo molido", amount: "500 g" },
         { name: "Queso panela", amount: "400 g" },
+        { name: "Requesón", amount: "200 g" },
         { name: "Proteína en polvo (whey)", amount: "1 bote" }
     ],
-    "Verduras": [
+    "Verduras y hierbas": [
         { name: "Espinaca baby", amount: "500 g" },
         { name: "Lechuga romana o mixta", amount: "2 piezas" },
         { name: "Arúgula", amount: "200 g" },
         { name: "Calabacita verde", amount: "6 piezas" },
         { name: "Brócoli", amount: "2 piezas" },
-        { name: "Pimiento morrón", amount: "4 piezas" },
-        { name: "Jitomate", amount: "1.5 kg" },
+        { name: "Pimiento morrón (rojo y amarillo)", amount: "4 piezas" },
+        { name: "Jitomate saladet y bola", amount: "1.5 kg" },
         { name: "Pepino", amount: "4 piezas" },
         { name: "Champiñones frescos", amount: "400 g" },
         { name: "Nopales limpios", amount: "6 piezas" },
@@ -1864,9 +2160,10 @@ const SHOPPING_DATA = {
         { name: "Espárragos", amount: "1 manojo" },
         { name: "Chile poblano", amount: "3 piezas" },
         { name: "Cebollín / poro fresco", amount: "2 manojos" },
-        { name: "Ajo", amount: "2 cabezas" },
+        { name: "Ajo fresco", amount: "2 cabezas" },
         { name: "Limón", amount: "1 kg" },
-        { name: "Cilantro", amount: "1 manojo" },
+        { name: "Cilantro fresco", amount: "1 manojo" },
+        { name: "Perejil fresco", amount: "1 manojo" },
         { name: "Jengibre fresco", amount: "1 trozo" }
     ],
     "Frutas": [
@@ -1874,7 +2171,7 @@ const SHOPPING_DATA = {
         { name: "Frambuesas congeladas", amount: "300 g" },
         { name: "Arándanos / blueberries congelados", amount: "300 g" },
         { name: "Manzana verde", amount: "6 piezas" },
-        { name: "Papaya", amount: "1 pieza" },
+        { name: "Papaya", amount: "1 pieza mediana" },
         { name: "Piña", amount: "1 pieza" },
         { name: "Kiwi", amount: "6 piezas" },
         { name: "Plátano", amount: "6 piezas" },
@@ -1883,30 +2180,52 @@ const SHOPPING_DATA = {
     "Cereales y leguminosas": [
         { name: "Avena en hojuelas", amount: "500 g" },
         { name: "Arroz integral", amount: "500 g" },
-        { name: "Tortilla de maíz", amount: "1 paquete" },
+        { name: "Tortilla de maíz", amount: "1 paquete grande" },
         { name: "Pan integral multigrano", amount: "1 pieza" },
         { name: "Camote", amount: "500 g" },
         { name: "Quinoa", amount: "200 g" },
-        { name: "Frijol bayo o negro (en bote cocido)", amount: "2 botes" }
+        { name: "Frijol bayo o negro (bote cocido)", amount: "2 botes" }
     ],
     "Lácteos": [
-        { name: "Yogurt griego natural sin azúcar", amount: "1 kg" },
+        { name: "Yogurt griego natural sin azúcar", amount: "1.8 kg" },
         { name: "Leche de almendra sin azúcar", amount: "1 L" }
     ],
-    "Grasas y despensa": [
-        { name: "Aguacate", amount: "5 piezas" },
+    "Grasas y semillas": [
+        { name: "Aguacate (madurez escalonada)", amount: "5 piezas" },
         { name: "Aceite de oliva extra virgen", amount: "1 botella" },
-        { name: "Aceite en aerosol", amount: "1 lata" },
-        { name: "Aceitunas", amount: "1 frasco" },
-        { name: "Almendras naturales", amount: "200 g" },
-        { name: "Nuez de la India", amount: "150 g" },
+        { name: "Aceite en aerosol (oliva o aguacate)", amount: "1 lata" },
+        { name: "Aceitunas verdes o negras", amount: "1 frasco" },
+        { name: "Almendras naturales sin sal", amount: "200 g" },
+        { name: "Nuez de la India sin sal", amount: "150 g" },
         { name: "Chía", amount: "100 g" },
-        { name: "Crema de cacahuate natural", amount: "1 frasco" },
-        { name: "Stevia o fruto del monje", amount: "1 paquete" }
+        { name: "Crema de cacahuate natural", amount: "1 frasco" }
+    ],
+    "Despensa y condimentos": [
+        { name: "Adobo chipotle en lata o pasta", amount: "1 pieza chica" },
+        { name: "Mostaza Dijon", amount: "1 frasco pequeño" },
+        { name: "Hoja de laurel seca", amount: "1 bolsa" },
+        { name: "Pimienta negra molida", amount: "1 frasco" },
+        { name: "Paprika / pimentón dulce", amount: "1 frasco" },
+        { name: "Ajo en polvo", amount: "1 frasco" },
+        { name: "Comino molido", amount: "1 frasco" },
+        { name: "Cúrcuma molida", amount: "1 frasco" },
+        { name: "Orégano seco", amount: "1 frasco" },
+        { name: "Sal de mar o gruesa", amount: "1 paquete" },
+        { name: "Vinagre de manzana", amount: "1 botella pequeña" },
+        { name: "Caldo de pollo o vegetal bajo en sodio", amount: "1 L" },
+        { name: "Stevia o fruto del monje", amount: "1 paquete" },
+        { name: "Papel aluminio", amount: "1 rollo" },
+        { name: "Papel encerado o papel pergamino", amount: "1 rollo" },
+        { name: "Etiquetas removibles", amount: "1 paquete" }
     ]
 };
 
 const WEEKLY_MENU = [
+    {
+        day: "Domingo",
+        isUpdateDay: true,
+        meals: []
+    },
     {
         day: "Lunes",
         meals: [
@@ -1966,132 +2285,862 @@ const WEEKLY_MENU = [
             { time: "Colación 2", name: "Manzana con almendras · Batido", desc: "E: manzana con almendras. J: batido de proteína con frutos rojos.", E: "1 fruta · ½ grasa c/p", J: "3.5 prot", portable: false },
             { time: "Cena", name: "Pescado empapelado", desc: "Pescado empapelado con verduras al vapor dentro del paquete. Arroz. Al terminar: actualización de recetas y meal prep de siguiente ciclo.", E: "4 prot · 2 cereal · 1 verd · 1 grasa", J: "5 prot · 2 cereal · 1 verd · 1 grasa", portable: false }
         ]
-    },
-    {
-        day: "Domingo",
-        isUpdateDay: true,
-        meals: []
     }
 ];
+
+// ====================================================
+// RECIPES DATA — ingredients with per-user portions + prep steps
+// Structure: keyed by "dayIndex_mealIndex" to match WEEKLY_MENU
+// E = Emmanuel (1,713 kcal), J = Jediael (2,030 kcal)
+// "shared" means same quantity for both
+// ====================================================
+
+const RECIPES = {
+    // LUNES (índice 1)
+    "1_0": { // Desayuno – Omelette con espinaca y panela
+        ingredients: [
+            { name: "Claras de huevo", E: "4 claras", J: "6 claras" },
+            { name: "Huevo entero", shared: "1 pieza c/u" },
+            { name: "Espinaca baby", shared: "1 taza c/u" },
+            { name: "Queso panela rallado", E: "40 g", J: "50 g" },
+            { name: "Tortilla de maíz (tostada)", E: "2 piezas", J: "2 piezas" },
+            { name: "Aguacate", E: "⅓ pieza", J: "⅓ pieza" },
+            { name: "Aceite en aerosol", shared: "3 disparos c/u" },
+            { name: "Pimienta, ajo en polvo, paprika", shared: "al gusto" },
+        ],
+        steps: [
+            "Batir las claras con el huevo entero, pimienta y ajo en polvo hasta integrar.",
+            "Calentar sartén con aceite en aerosol a fuego medio.",
+            "Verter la mezcla; cuando cuaje, colocar espinaca y panela en la mitad.",
+            "Doblar, cocinar 30 segundos más y servir.",
+            "Tostar tortillas en comal o air fryer 3 min a 180°C.",
+            "Servir con aguacate en rebanadas.",
+        ],
+        note: "Puede prepararse el domingo y refrigerar hasta 2 días. Recalentar 1 min en sartén."
+    },
+    "1_1": { // Colación 1 – Yogurt con fresas y almendras
+        ingredients: [
+            { name: "Yogurt griego natural", E: "½ taza", J: "½ taza" },
+            { name: "Fresas congeladas", E: "1 taza", J: "2 tazas" },
+            { name: "Almendras naturales", E: "10 piezas", J: "10 piezas" },
+            { name: "Chía (opcional)", shared: "1 cdita" },
+        ],
+        steps: [
+            "Depositar el yogurt en el frasco de 500 ml.",
+            "Añadir las fresas congeladas directamente (se descongelan en refri).",
+            "Coronar con almendras y chía.",
+            "Tapar herméticamente y refrigerar.",
+        ],
+        note: "Las fresas congeladas actúan como refrigerante natural en la lonchera."
+    },
+    "1_2": { // Comida – Pollo a la plancha con ensalada mediterránea
+        ingredients: [
+            { name: "Pechuga de pollo cocinada", E: "180 g", J: "240 g" },
+            { name: "Arroz integral cocido", E: "⅔ taza", J: "1⅓ taza" },
+            { name: "Mix hojas verdes", shared: "2 tazas c/u" },
+            { name: "Jitomate cherry", shared: "1 taza c/u" },
+            { name: "Pepino en rodajas", shared: "½ pieza c/u" },
+            { name: "Aceitunas", shared: "5 piezas c/u" },
+            { name: "Queso panela en cubos", E: "—", J: "40 g" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Limón, orégano, pimienta", shared: "al gusto" },
+        ],
+        steps: [
+            "Calentar el pollo ya cocinado 30 seg en microondas o 2 min en sartén con unas gotas de agua.",
+            "Calentar el arroz 1 min en microondas.",
+            "En tupper, colocar hojas verdes como base.",
+            "Añadir arroz a un costado y pollo rebanado encima.",
+            "Acomodar jitomate, pepino y aceitunas.",
+            "Aliñar con aceite, limón y orégano justo antes de comer.",
+        ],
+        note: "Si llevas en lonchera, guarda el aderezo en frasco aparte y agrégalo al momento."
+    },
+    "1_3": { // Colación 2 – Manzana / Batido proteico
+        ingredients: [
+            { name: "Manzana verde", E: "1 pieza", J: "—" },
+            { name: "Crema de cacahuate", E: "1 cda", J: "—" },
+            { name: "Proteína en polvo", E: "—", J: "25 g" },
+            { name: "Plátano", E: "—", J: "1 pieza" },
+            { name: "Leche de almendra", E: "—", J: "1 taza" },
+        ],
+        steps: [
+            "Emmanuel: rebanar la manzana y porcionar la crema de cacahuate en frasco aparte.",
+            "Jediael: licuar proteína + plátano + leche de almendra hasta homogéneo.",
+            "Transferir a botella hermética y refrigerar.",
+        ],
+        note: null
+    },
+    "1_4": { // Cena – Salmón al horno con calabacitas
+        ingredients: [
+            { name: "Filete de salmón", E: "140 g", J: "175 g" },
+            { name: "Calabacitas en medias lunas", shared: "1 taza c/u" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Ajo picado", shared: "2 dientes" },
+            { name: "Cebollín fresco picado", shared: "2 cdas" },
+            { name: "Limón en rodajas", shared: "1 pieza" },
+            { name: "Eneldo o tomillo, paprika, pimienta", shared: "al gusto" },
+            { name: "Tortillas de maíz", E: "2 piezas", J: "2 piezas" },
+        ],
+        steps: [
+            "Precalentar horno a 200°C (o air fryer a 180°C).",
+            "Poner rodajas de limón en la base del papel aluminio; colocar el salmón encima.",
+            "Untar con aceite, ajo, paprika y pimienta.",
+            "Hornear 12-15 min (air fryer: 10 min).",
+            "Mientras, saltear calabacitas con aceite en aerosol 5 min.",
+            "Espolvorear con cebollín fresco antes de servir con tortillas tibias.",
+        ],
+        note: "El salmón del martes se dejó crudo en el refri desde el meal prep; cocinarlo fresco esta noche."
+    },
+    // MARTES (índice 2)
+    "2_0": {
+        ingredients: [
+            { name: "Avena en hojuelas", E: "1 taza", J: "1 taza" },
+            { name: "Leche de almendra", shared: "1 taza c/u" },
+            { name: "Proteína en polvo", E: "17 g", J: "25 g" },
+            { name: "Chía", shared: "1 cda c/u" },
+            { name: "Frutos rojos congelados", shared: "½ taza c/u" },
+            { name: "Stevia", shared: "al gusto" },
+        ],
+        steps: [
+            "La noche anterior: mezclar avena, leche, proteína y chía en frasco de vidrio.",
+            "Tapar y refrigerar mínimo 6 horas.",
+            "Por la mañana, añadir los frutos rojos congelados encima.",
+            "Consumir frío directamente del frasco.",
+        ],
+        note: "Preparar el lunes por la noche para el martes."
+    },
+    "2_1": {
+        ingredients: [
+            { name: "Yogurt griego", E: "½ taza", J: "½ taza" },
+            { name: "Piña fresca picada", E: "1 taza", J: "2 tazas" },
+            { name: "Nuez de la India", E: "15 mitades", J: "15 mitades" },
+        ],
+        steps: ["Llenar frasco con yogurt.", "Agregar piña picada y nuez de la India.", "Refrigerar."],
+        note: null
+    },
+    "2_2": {
+        ingredients: [
+            { name: "Arrachera marinada cocinada", E: "180 g", J: "240 g" },
+            { name: "Nopales asados", shared: "1 taza c/u" },
+            { name: "Frijoles negros cocidos", E: "—", J: "⅓ taza" },
+            { name: "Tortillas de maíz", E: "2 piezas", J: "4 piezas" },
+            { name: "Cilantro, limón, salsa", shared: "al gusto" },
+        ],
+        steps: [
+            "Calentar la arrachera ya cocinada 2 min en sartén a fuego alto.",
+            "Asar los nopales picados en la misma sartén 5 min hasta que pierdan la baba.",
+            "Rebanar la arrachera en contra de la fibra.",
+            "Servir con nopales, frijoles calientes y tortillas pasadas por comal.",
+        ],
+        note: "La arrachera se marinó desde el domingo. Aguanta 3 días refrigerada ya cocinada."
+    },
+    "2_3": {
+        ingredients: [
+            { name: "Kiwi", E: "1½ pieza", J: "—" },
+            { name: "Almendras", E: "10 piezas", J: "—" },
+            { name: "Tostada integral", E: "—", J: "1 pieza" },
+            { name: "Atún en agua drenado", E: "—", J: "⅓ lata" },
+            { name: "Aguacate", E: "—", J: "⅓ pieza" },
+        ],
+        steps: [
+            "Emmanuel: porcionar kiwi rebanado y almendras en frasco 250 ml.",
+            "Jediael: mezclar atún drenado con limón y pimienta; porcionar en recipiente aparte de la tostada.",
+        ],
+        note: null
+    },
+    "2_4": {
+        ingredients: [
+            { name: "Pechuga de pollo cocinada (chipotle)", E: "120 g", J: "180 g" },
+            { name: "Espinaca baby", shared: "2 tazas c/u" },
+            { name: "Pan integral multigrano", E: "1 rebanada", J: "2 rebanadas" },
+            { name: "Jitomate rebanado", shared: "1 taza c/u" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Limón, orégano", shared: "al gusto" },
+        ],
+        steps: [
+            "Calentar el pollo al chipotle ya cocinado 1 min en microondas.",
+            "Tostar el pan.",
+            "Saltear la espinaca con aceite en aerosol 2 min.",
+            "Armar el plato con espinaca caliente, pollo encima, jitomate y aliño.",
+        ],
+        note: null
+    },
+    // MIÉRCOLES (índice 3)
+    "3_0": {
+        ingredients: [
+            { name: "Huevos enteros", E: "2 piezas", J: "3 piezas" },
+            { name: "Claras adicionales", E: "2 claras", J: "2 claras" },
+            { name: "Champiñones rebanados", shared: "1 taza c/u" },
+            { name: "Pimiento en tiras", shared: "½ taza c/u" },
+            { name: "Tortilla de maíz", E: "2 piezas", J: "2 piezas" },
+            { name: "Aguacate", E: "⅓ pieza", J: "⅓ pieza" },
+            { name: "Aceite en aerosol", shared: "3 disparos" },
+        ],
+        steps: [
+            "Saltear champiñones y pimiento con aceite en aerosol 4 min a fuego alto.",
+            "Batir huevos con claras, pimienta y sal.",
+            "Verter sobre las verduras y revolver suavemente hasta cuajar.",
+            "Servir con tortillas y aguacate.",
+        ],
+        note: null
+    },
+    "3_1": {
+        ingredients: [
+            { name: "Yogurt griego", E: "½ taza", J: "½ taza" },
+            { name: "Papaya fresca en cubos", E: "1 taza", J: "2 tazas" },
+            { name: "Chía", shared: "1 cda c/u" },
+        ],
+        steps: ["Porcionar yogurt.", "Añadir papaya y chía.", "Refrigerar en frasco hermético."],
+        note: null
+    },
+    "3_2": {
+        ingredients: [
+            { name: "Filete de tilapia cocinado", E: "180 g", J: "240 g" },
+            { name: "Quinoa cocida", E: "⅔ taza", J: "1⅓ taza" },
+            { name: "Mix hojas verdes", shared: "2 tazas c/u" },
+            { name: "Jitomate cherry", shared: "½ taza c/u" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Limón, cebollín, pimienta", shared: "al gusto" },
+        ],
+        steps: [
+            "Calentar tilapia 1 min en microondas con unas gotas de limón.",
+            "Calentar quinoa.",
+            "Armar plato con hojas, quinoa y tilapia encima.",
+            "Aliñar con aceite y limón al momento de comer.",
+        ],
+        note: null
+    },
+    "3_3": {
+        ingredients: [
+            { name: "Mandarina", E: "2 piezas", J: "—" },
+            { name: "Almendras", E: "10 piezas", J: "—" },
+            { name: "Proteína en polvo", E: "—", J: "25 g" },
+            { name: "Fresas congeladas", E: "—", J: "1 taza" },
+            { name: "Leche de almendra", E: "—", J: "1 taza" },
+        ],
+        steps: [
+            "Emmanuel: porcionar gajos de mandarina y almendras en frasco.",
+            "Jediael: licuar proteína + fresas congeladas + leche de almendra.",
+        ],
+        note: null
+    },
+    "3_4": {
+        ingredients: [
+            { name: "Pechuga de pollo en tiras", E: "180 g", J: "240 g" },
+            { name: "Brócoli en floretes", shared: "1 taza c/u" },
+            { name: "Pimiento en tiras", shared: "½ taza c/u" },
+            { name: "Zanahoria en juliana", shared: "½ taza c/u" },
+            { name: "Ejotes", shared: "½ taza c/u" },
+            { name: "Jengibre rallado", shared: "1 cdita" },
+            { name: "Ajo picado", shared: "2 dientes" },
+            { name: "Salsa de soya baja en sodio", shared: "2 cdas totales" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Arroz integral cocido", E: "⅔ taza", J: "1⅓ taza" },
+        ],
+        steps: [
+            "Calentar wok a fuego alto con aceite en aerosol. Saltear pollo 3-4 min. Retirar.",
+            "En el mismo wok, añadir aceite de oliva, jengibre y ajo; 30 seg.",
+            "Agregar zanahoria y ejotes 2 min, luego brócoli 2 min, luego pimiento 1 min.",
+            "Regresar el pollo, añadir soya y mezclar 1 min.",
+            "Servir sobre arroz integral caliente.",
+        ],
+        note: "El chile poblano en tiras es excelente opción para Emmanuel en este platillo."
+    },
+    // JUEVES (índice 4)
+    "4_0": {
+        ingredients: [
+            { name: "Avena molida (harina)", E: "1 taza", J: "1 taza" },
+            { name: "Proteína en polvo", E: "17 g", J: "25 g" },
+            { name: "Claras de huevo", shared: "2 c/u" },
+            { name: "Huevo entero", shared: "1 c/u" },
+            { name: "Leche de almendra", shared: "¼ taza c/u" },
+            { name: "Canela, stevia", shared: "al gusto" },
+            { name: "Frambuesas congeladas", shared: "½ taza c/u" },
+            { name: "Aceite en aerosol", shared: "3 disparos" },
+        ],
+        steps: [
+            "Licuar avena hasta obtener harina.",
+            "Mezclar todos los ingredientes excepto la fruta hasta obtener masa vertible.",
+            "Calentar sartén a fuego medio-bajo con aceite en aerosol.",
+            "Verter ⅓ taza por hot cake; cocinar 2 min por lado.",
+            "Servir con frambuesas congeladas (se van descongelando al contacto).",
+        ],
+        note: "La masa puede prepararse el miércoles por la noche y refrigerar."
+    },
+    "4_1": {
+        ingredients: [
+            { name: "Yogurt griego", E: "½ taza", J: "½ taza" },
+            { name: "Manzana verde picada", E: "1 pieza", J: "2 piezas" },
+            { name: "Chía", shared: "1 cda c/u" },
+        ],
+        steps: ["Porcionar yogurt.", "Agregar manzana picada y chía.", "Refrigerar en frasco."],
+        note: null
+    },
+    "4_2": {
+        ingredients: [
+            { name: "Albóndigas de pavo (congeladas desde meal prep)", E: "6 piezas ~180 g", J: "8 piezas ~240 g" },
+            { name: "Salsa de jitomate preparada", shared: "2 tazas totales" },
+            { name: "Calabacita en cubos", shared: "1 taza total" },
+            { name: "Cebollín picado", shared: "2 cdas" },
+            { name: "Laurel, orégano, pimienta", shared: "al gusto" },
+            { name: "Tortillas de maíz", E: "2 piezas", J: "4 piezas" },
+        ],
+        steps: [
+            "Sacar las albóndigas del congelador la noche anterior para descongelar en refri.",
+            "En sartén con aceite en aerosol, dorar las albóndigas 5 min por todos lados.",
+            "Agregar la salsa de jitomate ya preparada desde el meal prep.",
+            "Añadir calabacita, cebollín y hierbas. Tapar y cocinar 15-18 min a fuego bajo.",
+            "Servir con tortillas de maíz calientes.",
+        ],
+        note: "La salsa de jitomate se preparó el domingo. Verificar que esté en el refri etiquetada."
+    },
+    "4_3": {
+        ingredients: [
+            { name: "Plátano", E: "1 pieza", J: "—" },
+            { name: "Crema de cacahuate", E: "1 cda", J: "—" },
+            { name: "Requesón", E: "—", J: "3 cdas" },
+            { name: "Piña fresca picada", E: "—", J: "½ taza" },
+        ],
+        steps: [
+            "Emmanuel: porcionar plátano en rodajas con crema de cacahuate a un lado.",
+            "Jediael: combinar requesón con piña picada en frasco de 250 ml.",
+        ],
+        note: null
+    },
+    "4_4": {
+        ingredients: [
+            { name: "Camarón pelado crudo", E: "150 g (~25 piezas)", J: "200 g (~33 piezas)" },
+            { name: "Espárragos en tercios", shared: "½ manojo c/u" },
+            { name: "Ajo fileteado", shared: "4 dientes" },
+            { name: "Cebollín picado", shared: "3 cdas" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Limón, perejil, pimienta", shared: "al gusto" },
+            { name: "Arroz integral cocido", E: "⅔ taza", J: "1⅓ taza" },
+        ],
+        steps: [
+            "Secar camarones con papel absorbente; sazonar con pimienta y ajo en polvo.",
+            "Saltear espárragos con aceite en aerosol 4 min. Reservar.",
+            "En misma sartén, añadir aceite, ajo fileteado hasta que dore.",
+            "Agregar camarones; cocinar 2 min por lado hasta que se pongan rosados.",
+            "Regresar espárragos, añadir cebollín y jugo de limón. Mezclar.",
+            "Servir sobre arroz integral caliente.",
+        ],
+        note: "Los camarones nunca deben sobrepasar 4 minutos totales de cocción."
+    },
+    // VIERNES (índice 5)
+    "5_0": {
+        ingredients: [
+            { name: "Huevos enteros", E: "2 piezas", J: "3 piezas" },
+            { name: "Pechuga de pavo en rebanadas", E: "2 rebanadas", J: "2 rebanadas" },
+            { name: "Aguacate", E: "⅓ pieza", J: "⅓ pieza" },
+            { name: "Tortillas de maíz", E: "2 piezas", J: "2 piezas" },
+            { name: "Fruta de temporada", E: "1 porción", J: "—" },
+        ],
+        steps: [
+            "Calentar sartén con aceite en aerosol.",
+            "Cocinar los huevos al gusto (revueltos o estrellados).",
+            "Calentar el pavo en la misma sartén 1 min.",
+            "Armar tacos con tortillas, huevo, pavo y aguacate.",
+        ],
+        note: null
+    },
+    "5_1": {
+        ingredients: [
+            { name: "Yogurt griego", E: "½ taza", J: "½ taza" },
+            { name: "Kiwi rebanado", E: "1½ pieza", J: "3 piezas" },
+            { name: "Almendras", E: "10 piezas", J: "10 piezas" },
+        ],
+        steps: ["Porcionar todos los ingredientes en frasco de 500 ml.", "Refrigerar."],
+        note: null
+    },
+    "5_2": {
+        ingredients: [
+            { name: "Pollo al chipotle ya cocinado", E: "180 g", J: "240 g" },
+            { name: "Arroz integral cocido", E: "⅔ taza", J: "1⅓ taza" },
+            { name: "Mix hojas verdes", shared: "2 tazas c/u" },
+            { name: "Jitomate cherry", shared: "1 taza c/u" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Limón", shared: "al gusto" },
+        ],
+        steps: [
+            "Calentar pollo al chipotle 1 min en microondas.",
+            "Armar ensalada con hojas, arroz y pollo.",
+            "Aliñar con aceite y limón.",
+        ],
+        note: "El pollo al chipotle se preparó el domingo. Es el último día para consumirlo."
+    },
+    "5_3": {
+        ingredients: [
+            { name: "Fresas congeladas", E: "1 taza", J: "—" },
+            { name: "Nuez de la India", E: "15 mitades", J: "—" },
+            { name: "Pan integral", E: "—", J: "1 rebanada" },
+            { name: "Atún en agua drenado", E: "—", J: "⅓ lata" },
+            { name: "Aguacate", E: "—", J: "⅓ pieza" },
+            { name: "Limón, pimienta", E: "—", J: "al gusto" },
+        ],
+        steps: [
+            "Emmanuel: porcionar fresas congeladas con nuez en frasco.",
+            "Jediael: mezclar atún con limón, pimienta y aguacate en mash; porcionar aparte del pan.",
+        ],
+        note: null
+    },
+    "5_4": {
+        ingredients: [
+            { name: "Filete de salmón", E: "140 g", J: "175 g" },
+            { name: "Mostaza Dijon", shared: "1 cda c/u" },
+            { name: "Miel o stevia", shared: "½ cdita c/u" },
+            { name: "Brócoli en floretes", shared: "1 taza c/u" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Limón, pimienta", shared: "al gusto" },
+        ],
+        steps: [
+            "Precalentar horno a 200°C.",
+            "Mezclar mostaza con stevia y pimienta; untar sobre el salmón.",
+            "Hornear 12-15 min (air fryer: 10 min).",
+            "Saltear brócoli con aceite 5 min hasta tierno-crujiente.",
+            "Servir juntos con limón al lado.",
+        ],
+        note: null
+    },
+    // SÁBADO (índice 6)
+    "6_0": {
+        ingredients: [
+            { name: "Huevos enteros", E: "2 piezas", J: "3 piezas" },
+            { name: "Claras adicionales", E: "2 claras", J: "2 claras" },
+            { name: "Jitomate picado", shared: "1 taza" },
+            { name: "Ajo picado", shared: "2 dientes" },
+            { name: "Cebollín picado", shared: "3 cdas" },
+            { name: "Chile jalapeño (opcional)", shared: "al gusto" },
+            { name: "Queso panela desmoronado", E: "40 g", J: "50 g" },
+            { name: "Cilantro fresco", shared: "al gusto" },
+            { name: "Tortillas de maíz", E: "2 piezas", J: "2 piezas" },
+        ],
+        steps: [
+            "Saltear ajo y cebollín 1 min.",
+            "Agregar jitomate y chile; cocinar 5 min hasta salsa.",
+            "Batir huevos con claras; verter sobre la salsa.",
+            "Revolver suavemente hasta cuajar.",
+            "Añadir panela y cilantro al final.",
+            "Servir con tortillas calientes.",
+        ],
+        note: "Día de casa: sin lonchera. Disfrutar sin prisa."
+    },
+    "6_1": {
+        ingredients: [
+            { name: "Papaya en trozos", shared: "1 taza c/u" },
+            { name: "Yogurt griego", E: "½ taza", J: "½ taza" },
+            { name: "Leche de almendra (opcional)", shared: "¼ taza" },
+            { name: "Stevia", shared: "al gusto" },
+        ],
+        steps: [
+            "Licuar papaya con yogurt y leche de almendra hasta suave.",
+            "Endulzar con stevia si se desea.",
+            "Servir inmediatamente o refrigerar en botella tapada.",
+        ],
+        note: null
+    },
+    "6_2": {
+        ingredients: [
+            { name: "Bistec de res en tiras", E: "180 g", J: "240 g" },
+            { name: "Pimiento rojo y amarillo en tiras", shared: "1 taza c/u" },
+            { name: "Calabacita en medias lunas", shared: "½ taza c/u" },
+            { name: "Cebollín en tiras", shared: "4 cdas" },
+            { name: "Ajo picado", shared: "2 dientes" },
+            { name: "Limón, comino, paprika, pimienta", shared: "al gusto" },
+            { name: "Tortillas de maíz", E: "2 piezas", J: "4 piezas" },
+            { name: "Guacamole (aguacate)", E: "⅓ pieza", J: "½ pieza" },
+        ],
+        steps: [
+            "Marinar la carne en tiras con limón, comino y paprika 15 min mínimo.",
+            "Calentar sartén a fuego alto; saltear carne en tandas 2-3 min. Reservar.",
+            "En misma sartén saltear pimientos, calabacita y cebollín 4 min.",
+            "Regresar la carne 1 min más. Servir con tortillas y guacamole.",
+        ],
+        note: "Prepara más cantidad si lo deseas; la carne sobrante sirve para ensalada del domingo."
+    },
+    "6_3": {
+        ingredients: [
+            { name: "Manzana verde", E: "1 pieza", J: "—" },
+            { name: "Almendras", E: "10 piezas", J: "—" },
+            { name: "Proteína en polvo", E: "—", J: "25 g" },
+            { name: "Frutos rojos congelados", E: "—", J: "1 taza" },
+            { name: "Leche de almendra", E: "—", J: "1 taza" },
+        ],
+        steps: [
+            "Emmanuel: manzana con almendras.",
+            "Jediael: licuar proteína con frutos rojos y leche de almendra.",
+        ],
+        note: null
+    },
+    "6_4": {
+        ingredients: [
+            { name: "Filete de pescado blanco", E: "180 g", J: "240 g" },
+            { name: "Calabacita en juliana", shared: "½ taza c/u" },
+            { name: "Pimiento en tiras", shared: "½ taza c/u" },
+            { name: "Zanahoria en juliana fina", shared: "½ taza c/u" },
+            { name: "Ajo fileteado", shared: "2 dientes c/u" },
+            { name: "Limón en rodajas", shared: "3 rodajas c/u" },
+            { name: "Cebollín, eneldo, pimienta", shared: "al gusto" },
+            { name: "Aceite de oliva", shared: "1 cdita c/u" },
+            { name: "Arroz integral cocido", E: "⅔ taza", J: "1⅓ taza" },
+        ],
+        steps: [
+            "Precalentar horno a 200°C.",
+            "Extender papel aluminio; poner cama de verduras en juliana.",
+            "Colocar el pescado encima con aceite, ajo, limón, cebollín y hierbas.",
+            "Cerrar el paquete bien sellado.",
+            "Hornear 15 min (air fryer: 10 min). Abrir con cuidado por el vapor.",
+            "Servir con arroz integral.",
+        ],
+        note: "Noche de actualización: al terminar la cena, comenzar la revisión de recetas y prep del siguiente ciclo."
+    },
+};
+
 
 const PREP_STEPS = [
     {
         time: "5:00",
-        title: "Mise en place inicial",
-        detail: "Saca todos los ingredientes del refrigerador. Llena dos ollas grandes con agua y ponlas a hervir a fuego alto para el <strong>arroz integral</strong> (3 tazas) y la <strong>quinoa</strong> (1 taza) en paralelo. Lava y centrifuga todas las hojas verdes mientras el agua rompe hervor.",
+        title: "Mise en place · preparar estación de trabajo",
+        detail: "Lávate las manos con agua y jabón por 20 segundos. Saca del refrigerador: <strong>1.8 kg de pechuga de pollo</strong>, <strong>700 g de salmón</strong>, <strong>900 g de pescado blanco</strong>, <strong>500 g de pavo molido</strong>, <strong>600 g de arrachera</strong>. Prepara tu estación con: 2 ollas grandes, 2 bandejas para hornear, 1 sartén antiadherente, tabla de cortar, cuchillo afilado, báscula de cocina, tazas medidoras, cucharas medidoras. Coloca las proteínas crudas en un área separada de las verduras para evitar contaminación cruzada.",
         container: null,
-        cooling: null
-    },
-    {
-        time: "5:20",
-        title: "Cereales en olla tradicional",
-        detail: "Cuando hierva el agua, agrega el arroz integral (proporción 1:2.5, tapa y baja a fuego bajo, 40-45 min). En la otra olla pon la quinoa (proporción 1:2, tapa y cocina 15 min). <strong>Nota:</strong> supervisa el arroz en los últimos 5 minutos para evitar que se queme.",
-        container: "Al terminar, transfiere cada cereal a un recipiente hermético grande de vidrio cuando esté tibio. Etiqueta con el contenido y la fecha.",
-        cooling: "Deja enfriar 20 minutos a temperatura ambiente (máximo 30 min) antes de tapar y refrigerar. Taparlo caliente genera condensación y acelera el deterioro."
-    },
-    {
-        time: "5:30",
-        title: "Precalentar horno y cortar verduras",
-        detail: "Precalienta el horno a 200°C. Corta camote en cubos pequeños, pimientos en tiras, calabacitas en medias lunas, brócoli en floretes. Separa todo en bandejas.",
-        container: null,
-        cooling: null
-    },
-    {
-        time: "5:45",
-        title: "Bandeja de vegetales al horno",
-        detail: "Acomoda camote + pimientos + calabacitas en una sola bandeja grande. Rocía con aceite en aerosol, añade ajo en polvo, paprika y pimienta. Hornea 25 minutos, volteando a la mitad.",
-        container: "Una vez frías, transfiere las verduras a un recipiente hermético grande de vidrio. Para conservar textura, coloca una capa de papel absorbente en el fondo.",
-        cooling: "Enfría a temperatura ambiente 15-20 minutos sobre la misma bandeja (sin taparlas). Tapar las verduras calientes las reblandece por el vapor."
-    },
-    {
-        time: "6:00",
-        title: "Sazonar y marinar proteínas",
-        detail: "Divide las pechugas de pollo en tres grupos: <strong>1)</strong> plancha simple con ajo y hierbas, <strong>2)</strong> marinada chipotle (adobo suave + limón), <strong>3)</strong> reservada para rostizar. Marina la arrachera con limón, ajo y aceite.",
-        container: "Los grupos 2 y 3 (sin cocinar aún) van en bolsas herméticas o recipientes con tapa al refrigerador mientras se trabaja. La arrachera marinada también va en bolsa hermética.",
-        cooling: null
-    },
-    {
-        time: "6:15",
-        title: "Pollo en air fryer",
-        detail: "Mete las pechugas del grupo 1 (plancha) al air fryer a 180°C por 18-20 minutos. Mientras, retira las verduras del horno cuando estén listas.",
-        container: "Al estar cocinadas, transfiere las pechugas a un recipiente hermético grande. Córtalas solo al momento de consumir para preservar jugosidad.",
-        cooling: "Deja reposar el pollo 5 minutos tras salir del air fryer para que los jugos se redistribuyan. Luego enfría 15 minutos antes de refrigerar."
-    },
-    {
-        time: "6:20",
-        title: "Frijoles cocidos desde bote",
-        detail: "Sin olla exprés, usamos frijoles ya cocidos en bote. Drena, enjuaga y calienta en olla con ajo y cebollín (omite cebolla para Emmanuel). Sazona con pimienta y comino. Cocina 10 minutos a fuego bajo.",
-        container: "Transfiere los frijoles con parte de su caldo a un recipiente hermético mediano. El caldo ayuda a conservar la humedad durante la semana.",
-        cooling: "Enfría 15 minutos destapados antes de refrigerar."
-    },
-    {
-        time: "6:40",
-        title: "Huevos cocidos en olla",
-        detail: "Cuece 10 huevos en olla tradicional: agua fría, sube a ebullición, baja a fuego medio y cuece 10 minutos. Al terminar, pasa a bowl con agua y hielo para detener la cocción.",
-        container: "Una vez fríos (5 minutos en el agua con hielo), sécalos con papel absorbente y guárdalos con cáscara en un recipiente hermético mediano. Pelar hasta el momento de consumir.",
-        cooling: "El choque térmico con agua fría es obligatorio: detiene la cocción, facilita el pelado y extiende la vida útil."
-    },
-    {
-        time: "7:00",
-        title: "Salmón y pescado blanco al horno",
-        detail: "En una bandeja con papel aluminio, acomoda el <strong>salmón</strong> (para lunes) y <strong>pescado blanco</strong> (para miércoles) sazonados. Hornea a 200°C por 12-15 minutos.",
-        container: "Cada pescado en un recipiente hermético mediano por separado para evitar mezcla de sabores. El salmón crudo excedente va en bolsa hermética al congelador, etiquetada con fecha.",
-        cooling: "Enfría los pescados cocinados 15-20 minutos sin tapar. El pescado es especialmente sensible a la condensación; no lo tapes caliente."
-    },
-    {
-        time: "7:15",
-        title: "Preparar albóndigas de pavo crudas",
-        detail: "Mezcla pavo molido con huevo, avena molida como pan rallado, perejil y especias. Forma bolitas de 30g cada una. Colócalas en bandeja separadas, congela 30 min, luego pásalas a bolsa etiquetada (se cocinarán el jueves).",
-        container: "Pre-congelación individual sobre bandeja con papel encerado (30 min), luego transfiere a bolsa de silicón reutilizable o bolsa hermética para congelador. Así no se pegan entre sí.",
-        cooling: null
-    },
-    {
-        time: "7:30",
-        title: "Porcionar yogurt con frutos congelados (portable)",
-        detail: "Llena <strong>12 frascos</strong> de vidrio de 500 ml con yogurt griego (6 para cada uno de ustedes, correspondientes a las colaciones de lunes a sábado). <strong>Importante:</strong> agrega los frutos congelados (fresas, frambuesas, arándanos) directamente; se irán descongelando lentamente en refri y estarán jugosos al momento de consumir. Agrega almendras o chía según el día del menú. <strong>Nota:</strong> el sábado la colación 1 es smoothie de papaya en casa, por lo que no requiere frasco portátil.",
-        container: "Frascos de vidrio 500 ml con tapa hermética rosca (mason jar). Estas medidas (8 cm diámetro × 15 cm alto) encajan perfectamente vertical en las loncheras de 20×15×13 cm. <strong>Destino: lonchera</strong> — cada frasco viaja directamente del refri a la lonchera por la mañana.",
-        cooling: "Refrigeración inmediata. No requiere enfriado previo porque los ingredientes están fríos.",
-        portable: true
-    },
-    {
-        time: "7:45",
-        title: "Preparar ensaladas en frasco (portable)",
-        detail: "Prepara <strong>10 frascos</strong> de vidrio de 1 L con capas en este orden: <strong>1)</strong> aderezo al fondo, <strong>2)</strong> verduras duras (zanahoria, pepino, jitomate), <strong>3)</strong> proteína, <strong>4)</strong> cereal si aplica, <strong>5)</strong> hojas verdes arriba. <strong>El aguacate NO se incluye</strong>; se agrega al momento de consumir. Esto cubre las comidas principales portátiles de lunes a viernes para ambos (5 días × 2 personas).",
-        container: "Frascos de vidrio 1 L con tapa hermética (10 cm diámetro × 18 cm alto). Encajan ligeramente inclinados en la lonchera de 13 cm de alto, o en posición vertical si la tapa de la lonchera tiene holgura. El orden de capas aísla las hojas verdes del aderezo y garantiza frescura hasta 5 días. <strong>Destino: lonchera</strong> — transporte directo desde el refrigerador.",
-        cooling: "Refrigeración inmediata. Las hojas deben estar perfectamente secas antes de colocarlas arriba.",
-        portable: true
-    },
-    {
-        time: "7:55",
-        title: "Porcionar colaciones 2 para lonchera",
-        detail: "Prepara <strong>10 contenedores pequeños</strong> (5 por persona, lunes a viernes) con las colaciones 2 personalizadas. Para Emmanuel: rebanadas de manzana con crema de cacahuate el lunes, kiwi rebanado con almendras el martes, gajos de mandarina con almendras el miércoles, plátano en rodajas con crema de cacahuate el jueves, fresas congeladas con nuez de la India el viernes. Para Jediael: batido preparado en botella el lunes, ingredientes listos de tostada de atún el martes, ingredientes de smoothie el miércoles, requesón con piña el jueves, pan integral con atún y aguacate el viernes. <strong>Nota:</strong> el sábado las colaciones se consumen en casa, no requieren porcionado portátil.",
-        container: "Frascos pequeños de vidrio 250 ml para frutas y semillas (7 cm diámetro × 10 cm alto, caben varios lado a lado en la lonchera). Recipientes herméticos rectangulares pequeños (15×10×5 cm) para tostadas y sándwiches. Botella térmica o frasco para batidos de Jediael. <strong>Destino: lonchera</strong>. Las fresas y frambuesas congeladas mantienen frío el resto del contenido durante la mañana, funcionando como hielera natural.",
-        cooling: "Los ingredientes ya están fríos. Las frutas congeladas, al ir incluidas, hacen las veces de elemento refrigerante natural en la lonchera durante el traslado.",
-        portable: true
-    },
-    {
-        time: "8:05",
-        title: "Salsas base y porciones de grasa",
-        detail: "Prepara: <strong>salsa de jitomate</strong> para albóndigas (jitomate + ajo + cebollín + laurel), <strong>marinada chipotle</strong>, <strong>vinagreta</strong> (aceite oliva + limón + mostaza Dijon). Porciona en bolsas pequeñas: 10 almendras por ración, 15 mitades de nuez de la India por ración, porciones de crema de cacahuate.",
-        container: "Frascos pequeños de vidrio de 250 ml con tapa hermética para salsas (permanecen en casa, uso diario al ensamblar). Bolsas herméticas pequeñas para frutos secos porcionados, integradas a cada lonchera junto a la colación correspondiente.",
-        cooling: "Las salsas cocinadas requieren enfriado de 20 minutos antes de refrigerar. Los frutos secos ya están fríos, refrigerar inmediatamente.",
+        cooling: null,
         portable: false
     },
     {
-        time: "8:15",
-        title: "Etiquetar y organizar el refrigerador",
-        detail: "Etiqueta TODO con día, contenido y destinatario usando etiquetas removibles. Organiza el refrigerador diferenciando contenedores portátiles y estacionarios: <strong>zona frontal del estante superior</strong> para frascos de lonchera (yogurt, ensaladas, colaciones 2) agrupados por día para toma rápida en las mañanas, <strong>zona trasera del estante superior</strong> para cenas pre-ensambladas, <strong>zona media</strong> para proteínas cocinadas a granel, <strong>cajón inferior</strong> para verduras crudas, <strong>puerta</strong> para salsas y aderezos de uso diario.",
-        container: "Revisa que todos los recipientes tengan cierre hermético adecuado. Los frascos destinados a lonchera deben estar al frente para tomarlos sin buscar. Recipientes con goma deteriorada deben reemplazarse para evitar pérdida de frescura.",
+        time: "5:05",
+        title: "Poner a hervir agua para cereales",
+        detail: "En una olla grande (mínimo 4 L de capacidad), agrega <strong>8 tazas de agua (2 litros)</strong> para el arroz integral. En una olla mediana (2 L), agrega <strong>2 tazas de agua (500 ml)</strong> para la quinoa. Añade <strong>1 cucharadita de sal por cada olla</strong>. Tapa ambas y ponlas a fuego alto. Mientras rompen hervor (tardará 8-10 minutos), continúa con el siguiente paso.",
+        container: null,
         cooling: null,
+        portable: false
+    },
+    {
+        time: "5:10",
+        title: "Lavar y centrifugar hojas verdes",
+        detail: "Lava con agua fría: <strong>500 g de espinaca baby</strong>, <strong>2 piezas de lechuga romana/mixta</strong>, <strong>200 g de arúgula</strong>. Centrifuga o seca con toallas limpias hasta que queden completamente sin agua (este paso es crítico para conservarlas hasta 5 días). Guarda la espinaca en un recipiente mediano con papel absorbente abajo y arriba; separa 2 tazas de lechuga mezclada para las ensaladas portátiles del lunes-viernes en otro recipiente mediano.",
+        container: "Recipientes herméticos medianos con papel absorbente en el fondo. El papel absorbe exceso de humedad y duplica la vida útil de las hojas.",
+        cooling: null,
+        portable: false
+    },
+    {
+        time: "5:20",
+        title: "Cocinar arroz integral · 3⅓ tazas en 8 tazas de agua",
+        detail: "Cuando el agua rompa hervor, agrega <strong>3⅓ tazas de arroz integral crudo (660 g)</strong>. Revuelve una vez, baja el fuego al mínimo, tapa la olla y cocina por <strong>40-45 minutos sin destapar</strong>. La proporción es 1 parte de arroz por 2.5 partes de agua. Cuando haya absorbido toda el agua, apaga el fuego y déjalo reposar tapado 5 minutos más. Rinde aproximadamente <strong>10 tazas de arroz cocido</strong>, que cubre lunes comida, miércoles cena, jueves cena, viernes comida y sábado cena.",
+        container: "Al terminar y reposar 5 min, transfiere a un recipiente hermético grande de vidrio cuando esté aún tibio pero no caliente.",
+        cooling: "Extiende el arroz en una bandeja para acelerar el enfriado. Debe bajar de temperatura por <strong>20-25 minutos sin tapar</strong>. Refrigera antes de completar 2 horas desde la cocción (regla USDA). Jamás lo tapes caliente: genera condensación que acelera el crecimiento bacteriano.",
+        portable: false
+    },
+    {
+        time: "5:25",
+        title: "Cocinar quinoa · 1 taza en 2 tazas de agua",
+        detail: "Cuando el agua rompa hervor en la olla mediana, enjuaga <strong>1 taza de quinoa cruda (185 g)</strong> en un colador de malla fina durante 30 segundos (quita el sabor amargo de la saponina). Agrega la quinoa al agua, revuelve, baja a fuego bajo, tapa y cocina por <strong>15 minutos exactos</strong>. Apaga y deja reposar tapada 5 minutos. Revuelve con tenedor al final. Rinde <strong>2 tazas de quinoa cocida</strong> para la comida del miércoles (para ambos).",
+        container: "Recipiente hermético mediano de vidrio.",
+        cooling: "Extender en plato y enfriar 15 minutos antes de tapar y refrigerar.",
+        portable: false
+    },
+    {
+        time: "5:30",
+        title: "Precalentar horno y cortar verduras para asar",
+        detail: "Precalienta el horno a <strong>200°C (400°F)</strong>. Mientras, en una tabla limpia corta: <strong>4 calabacitas verdes en medias lunas de 1 cm</strong> (para 4 tazas cocinadas que cubren lunes cena y jueves comida), <strong>2 pimientos morrones en tiras</strong> (1 rojo + 1 amarillo, para stir-fry miércoles y lunes ensalada), <strong>500 g de brócoli en floretes medianos</strong> (para miércoles cena y viernes cena). Reserva cada verdura por separado.",
+        container: null,
+        cooling: null,
+        portable: false
+    },
+    {
+        time: "5:40",
+        title: "Bandeja 1 al horno · calabacitas y pimientos",
+        detail: "En una bandeja grande forrada con papel encerado acomoda las <strong>calabacitas + pimientos + 500 g de champiñones en mitades</strong>. Rocía con <strong>aceite en aerosol (10 disparos)</strong>, agrega <strong>1 cdta de ajo en polvo</strong>, <strong>1 cdta de paprika</strong>, <strong>½ cdta de pimienta negra</strong>, <strong>1 cdta de sal</strong>. Mezcla con las manos limpias. Hornea <strong>25 minutos</strong>, volteando las verduras a los 13 minutos. Deben quedar doradas pero firmes, no pastosas.",
+        container: "Un recipiente hermético grande para calabacitas y pimientos mezclados (4 tazas). Los champiñones van en un recipiente mediano por separado porque sueltan más líquido.",
+        cooling: "Enfriar sobre la misma bandeja por <strong>15-20 minutos sin tapar</strong>. Si las tapas calientes, el vapor las ablanda. Refrigerar antes de que pasen 2 horas desde que salieron del horno.",
+        portable: false
+    },
+    {
+        time: "5:45",
+        title: "Cocer huevos · 10 huevos en olla con agua fría",
+        detail: "En una olla mediana, coloca <strong>10 huevos</strong> en una sola capa. Cubre con agua fría hasta que los huevos queden <strong>2.5 cm debajo del nivel del agua</strong>. Agrega <strong>1 cucharadita de sal y 1 cucharadita de vinagre</strong> (facilita el pelado). Lleva a ebullición a fuego alto, y una vez hirviendo baja a fuego medio y cocina exactamente <strong>10 minutos</strong>. Prepara un bowl con <strong>agua + hielo abundante</strong>. Al terminar los 10 minutos, transfiere los huevos de inmediato al bowl con hielo por <strong>5 minutos</strong>: detiene la cocción, evita la capa verde gris en la yema y facilita el pelado.",
+        container: "Sécalos con papel absorbente y guárdalos <strong>con cáscara</strong> en un recipiente hermético mediano. Duración segura: 7 días con cáscara.",
+        cooling: "El choque térmico con agua+hielo es obligatorio por seguridad y calidad. Refrigerar inmediatamente después de secar.",
+        portable: false
+    },
+    {
+        time: "6:00",
+        title: "Sazonar y dividir el pollo · tres destinos",
+        detail: "Divide los <strong>1.8 kg de pechuga de pollo cruda</strong> en tres grupos usando báscula:<br><br><strong>Grupo A · 1,200 g crudos → cocinar HOY</strong>: rendirá ~960 g cocinados (20% merma). Cubre lunes comida (420 g cocinado: 180 E + 240 J), martes cena (270 g cocinado: 120 E + 150 J) y miércoles cena (270 g cocinado: 120 E + 150 J). Todos dentro de la ventana segura de 4 días desde cocción.<br><br><strong>Grupo B · 525 g crudos → marinar hoy, cocinar jueves noche</strong>: rendirá ~420 g para viernes comida (180 E + 240 J). La marinada ácida (chipotle + limón) actúa como conservador y extiende la frescura del crudo hasta 3-4 días.<br><br><strong>Grupo C · 75 g crudos → congelar</strong>: sobrante para uso flexible.<br><br><strong>Sazonado Grupo A:</strong> <strong>1.5 cdta sal + 1 cdta pimienta + 1 cdta ajo polvo + 1 cdta paprika + jugo de 1 limón + 1 cda aceite oliva</strong>.<br><br><strong>Marinada Grupo B (chipotle):</strong> en bolsa hermética mezcla <strong>2 cdas adobo chipotle + jugo de 1 limón + 2 dientes ajo machacados + 1 cdta orégano + 1 cdta sal + 1 cda aceite oliva</strong>. Agrega el pollo, masajea la bolsa 30 seg, cierra.",
+        container: "Grupo B marinado en bolsa hermética al refri, etiquetada <strong>'Pollo chipotle marinado · cocinar jue 23 noche'</strong>. Grupo C en bolsa al congelador <strong>'Pollo crudo reserva · 75 g'</strong>.",
+        cooling: null,
+        portable: false
+    },
+    {
+        time: "6:15",
+        title: "Cocinar Grupo A de pollo al sartén · 960 g",
+        detail: "Calienta un sartén antiadherente a fuego medio-alto. Rocía con <strong>aceite en aerosol (3 disparos)</strong>. Cocina el pollo en 2-3 tandas (no amontonar): <strong>6-7 minutos de cada lado</strong>, hasta que el termómetro interno marque <strong>74°C (165°F)</strong> y los jugos salgan transparentes. Total: 12-15 minutos por tanda. Deja reposar 5 minutos antes de guardar (los jugos se redistribuyen y no se seca). <strong>NO lo cortes hoy</strong>: consérvalo entero y corta solo al momento de servir, para mantener jugosidad.",
+        container: "Recipiente hermético grande de vidrio para las pechugas enteras. Etiqueta: <strong>'Pollo plancha · cocinado dom 19 · consumir antes jue 23'</strong>.",
+        cooling: "Reposar 5 min fuera del sartén. Enfriar 15-20 minutos sin tapar en plato amplio para acelerar el descenso de temperatura. Refrigerar antes de las 2 horas desde cocción.",
+        portable: false
+    },
+    {
+        time: "6:20",
+        title: "Preparar frijoles · 1 bote cocido con cebollín",
+        detail: "Drena y enjuaga <strong>1 bote de frijoles cocidos (400 g, equivale a aprox. 1.5 tazas)</strong>. En una cacerola pequeña calienta <strong>1 cdta de aceite oliva</strong>, agrega <strong>2 dientes de ajo picados</strong> y <strong>½ manojo de cebollín picado</strong> (Emmanuel no consume cebolla cocida, por eso usamos cebollín). Sofríe 2 minutos. Agrega los frijoles con <strong>¼ taza de caldo de pollo bajo en sodio</strong>, <strong>½ cdta de comino</strong>, <strong>½ cdta de sal</strong> y <strong>1 hoja de laurel</strong>. Cocina 8-10 minutos a fuego bajo. Retira la hoja de laurel al final. Rinde la cantidad exacta para la comida del martes (ambos).",
+        container: "Recipiente hermético mediano. Los frijoles se conservan 4-5 días. Incluye parte del caldo para que no se resequen.",
+        cooling: "Enfriar 15 minutos destapados antes de refrigerar.",
+        portable: false
+    },
+    {
+        time: "6:35",
+        title: "Recuperar arroz y quinoa · chequeo",
+        detail: "Revisa el arroz: debe estar esponjoso sin agua residual. Apaga y deja reposar tapado 5 min. La quinoa ya debe estar lista. Extiende ambos cereales en bandejas amplias para que enfríen rápido. Esto es crítico por seguridad: el arroz cocido mantenido a temperatura tibia es un medio ideal para <em>Bacillus cereus</em>. Debe enfriar a menos de 4°C lo antes posible.",
+        container: null,
+        cooling: "Enfriar en bandejas extendido durante 15-20 minutos antes de pasar a recipientes herméticos.",
+        portable: false
+    },
+    {
+        time: "6:45",
+        title: "Preparar albóndigas de pavo · crudas para viernes",
+        detail: "<strong>NOTA IMPORTANTE SEGURIDAD:</strong> las albóndigas se cocinarán el JUEVES (día de consumo), no hoy. Razón: el pavo molido cocinado tiene ventana de solo 1-2 días (USDA). Hoy solo las formas y las congelas crudas.<br><br>En un bowl grande combina: <strong>500 g pavo molido</strong>, <strong>1 huevo</strong>, <strong>⅓ taza de avena en hojuelas molidas (sustituye pan molido)</strong>, <strong>2 cdas de perejil picado</strong>, <strong>2 dientes ajo machacados</strong>, <strong>½ cdta comino</strong>, <strong>1 cdta sal</strong>, <strong>½ cdta pimienta</strong>, <strong>¼ taza de cebollín picado fino</strong>. Mezcla sin amasar en exceso. Forma <strong>20 albóndigas de 30 g cada una</strong> (usa báscula para uniformidad).",
+        container: "Bandeja con papel encerado, albóndigas separadas sin tocarse. Congela 30 min descubiertas, luego transfiere a bolsa hermética de silicón etiquetada: <strong>'Albóndigas pavo crudas · formadas dom 19 · cocinar jue 23'</strong>. Duración en congelador: 3-4 meses.",
+        cooling: "Pre-congelación individual evita que se peguen entre sí. Mantenlas en congelador hasta el jueves por la mañana.",
+        portable: false
+    },
+    {
+        time: "7:00",
+        title: "Cocinar salmón al horno · para lunes cena",
+        detail: "<strong>NOTA SEGURIDAD:</strong> cocinamos hoy solo el salmón que se consume el lunes (dentro de las 48 horas, ventana segura para pescado cocinado según USDA). El salmón restante se congela crudo para cocinarse el viernes por la tarde.<br><br><strong>Cálculo de porciones:</strong> Emmanuel cena 120 g cocinados y Jediael 150 g cocinados; como el salmón pierde ~20% de peso al cocinar, necesitamos <strong>340 g de salmón crudo</strong> para el lunes. De los 700 g comprados, separa estos 340 g en 2 filetes.<br><br>Coloca los filetes en bandeja con papel aluminio. Sazona con: <strong>jugo de ½ limón</strong>, <strong>1 cdta aceite oliva</strong>, <strong>½ cdta sal</strong>, <strong>pimienta al gusto</strong>, <strong>rodajas de limón encima</strong>. Hornea a <strong>200°C por 12-15 minutos</strong> hasta que el centro marque <strong>63°C (145°F)</strong> o se desmenuce fácilmente con tenedor.<br><br>Los <strong>360 g de salmón crudo restantes</strong>: empaca en bolsa hermética, etiqueta y congela para la cena del viernes.",
+        container: "Salmón cocinado: recipiente hermético mediano etiquetado <strong>'Salmón · cocinado dom 19 · consumir lun 20'</strong>. Salmón crudo congelado: bolsa hermética etiquetada <strong>'Salmón crudo 360 g · para vie 24 · descongelar jue 23 en refri'</strong>.",
+        cooling: "El pescado es especialmente sensible: enfriar sin tapar 15-20 minutos. Refrigerar antes de 2 horas desde cocción. Consumir máximo martes por la noche (2 días).",
+        portable: false
+    },
+    {
+        time: "7:15",
+        title: "Preparar pescado blanco · solo marinar para miércoles",
+        detail: "<strong>NOTA SEGURIDAD:</strong> el pescado blanco para la comida del miércoles NO se cocina hoy; se cocina el martes por la noche o el miércoles por la mañana para garantizar que esté dentro de la ventana segura de 48 horas al momento de consumir.<br><br>Del total de 900 g: separa <strong>500 g para el miércoles</strong> (2 filetes) y <strong>400 g para el sábado</strong> (2 filetes empapelados).<br><br>Sazona los <strong>500 g del miércoles</strong> con <strong>jugo de 1 limón + 1 cdta sal + ½ cdta pimienta + 1 cdta aceite oliva</strong>, coloca en bolsa hermética. El limón actúa como conservador ligero y la marinada estará lista. Congela los <strong>400 g del sábado</strong> crudos sin sazonar.",
+        container: "Pescado miércoles: bolsa hermética al refrigerador, etiquetada <strong>'Pescado marinado · cocinar mar noche o mie 22'</strong>. Pescado sábado: bolsa hermética al congelador, etiquetada <strong>'Pescado crudo · para sáb 25 · descongelar vie 24 en refri'</strong>.",
+        cooling: null,
+        portable: false
+    },
+    {
+        time: "7:25",
+        title: "Preparar salsa de jitomate para albóndigas",
+        detail: "En una cacerola mediana calienta <strong>1 cda de aceite oliva</strong> a fuego medio. Agrega <strong>3 dientes de ajo picados</strong> y <strong>¼ taza de cebollín picado</strong>, sofríe 2 minutos. Añade <strong>4 jitomates grandes licuados (aprox 600 g, 2.5 tazas de puré)</strong>, <strong>2 hojas de laurel</strong>, <strong>1 cdta sal</strong>, <strong>½ cdta pimienta</strong>, <strong>1 cdta orégano</strong>, <strong>½ cdta azúcar</strong> (balancea acidez). Cocina a fuego bajo <strong>15 minutos</strong> removiendo ocasionalmente, hasta que espese. Retira laurel.",
+        container: "Frasco de vidrio de 500 ml con tapa hermética. Etiqueta: <strong>'Salsa jitomate · preparada dom 19 · usar jue 23 con albóndigas'</strong>. Duración: 5 días en refri.",
+        cooling: "Enfriar 20 minutos destapada antes de tapar. La salsa caliente genera vapor y condensación.",
+        portable: false
+    },
+    {
+        time: "7:45",
+        title: "Porcionar yogurt en frascos portátiles · 10 frascos",
+        detail: "Prepara <strong>10 frascos mason jar de 500 ml</strong> (5 para Emmanuel lun-vie + 5 para Jediael lun-vie; sábado consumen smoothie en casa). En cada uno:<br><br><strong>Para Emmanuel (150 g yogurt c/u):</strong> lunes → 1 taza fresas congeladas + 10 almendras; martes → 1 taza piña fresca picada + 15 mitades nuez india; miércoles → 1 taza papaya + 1 cdta chía; jueves → 1 manzana verde picada + 1 cdta chía; viernes → 2 kiwis en rodajas + 10 almendras.<br><br><strong>Para Jediael (150 g yogurt c/u):</strong> mismo orden pero con <strong>frutas dobles</strong> (2 tazas de cada fruta) según el menú.<br><br>Usa <strong>un total de 1.5 kg de yogurt griego</strong> distribuido en estos 10 frascos.",
+        container: "Frascos mason jar de 500 ml (8 cm × 15 cm). Destino: LONCHERA cada mañana lun-vie. La fruta congelada se descongela gradualmente y sirve como refrigerante natural durante el traslado.",
+        cooling: "Refrigeración inmediata. Los ingredientes ya están fríos. Colocar al frente del estante superior para toma rápida por la mañana.",
+        portable: true
+    },
+    {
+        time: "8:00",
+        title: "Preparar ensaladas en frasco · 10 frascos de 1 L",
+        detail: "Prepara <strong>10 frascos de vidrio de 1 L</strong> (5 Emmanuel + 5 Jediael) para las comidas portátiles lun-vie. <strong>Orden crítico de capas (abajo hacia arriba)</strong>:<br><br><strong>1) Aderezo (aísla hojas verdes):</strong> 1 cdta vinagreta base (Emmanuel) / 2 cdta (Jediael).<br><strong>2) Verduras firmes:</strong> ¼ taza jitomate cherry + ¼ taza pepino + ¼ taza zanahoria rallada.<br><strong>3) Proteína:</strong> según el día, se añade por la mañana o va incluida si es pollo cocinado (lunes: 180 g pollo E / 240 g J).<br><strong>4) Cereales si aplica:</strong> ⅔ taza arroz (E) / 1⅓ taza (J) para comidas con arroz.<br><strong>5) Aceitunas y extras:</strong> 5 aceitunas.<br><strong>6) Hojas verdes arriba (siempre secas):</strong> 2 tazas lechuga/mixta.<br><br><strong>NO incluir aguacate</strong>: se añade al momento de consumir para evitar oxidación.",
+        container: "Frascos de 1 L (10 cm × 18 cm). Caben inclinados en la lonchera de 13 cm de alto, o verticales si la tapa tiene holgura. Etiqueta cada uno con día y usuario.",
+        cooling: "Refrigeración inmediata. Las hojas deben estar perfectamente secas al colocarlas arriba (si quedan húmedas se marchitan).",
+        portable: true
+    },
+    {
+        time: "8:10",
+        title: "Porcionar colaciones 2 en contenedores pequeños",
+        detail: "Prepara <strong>10 recipientes pequeños (5 E + 5 J)</strong> para colación 2 lun-vie. El sábado la colación se prepara en casa.<br><br><strong>Emmanuel:</strong><br>• Lunes: 1 manzana en rebanadas + 1 cdta crema de cacahuate en frasco 250 ml.<br>• Martes: 2 kiwis en rodajas + 10 almendras en frasco 250 ml.<br>• Miércoles: 2 mandarinas peladas en gajos + 10 almendras en frasco 250 ml.<br>• Jueves: 1 plátano + 1 cdta crema de cacahuate en frasco 250 ml (el plátano se rebana por la mañana para evitar oxidación).<br>• Viernes: 1 taza fresas congeladas + 15 mitades nuez india en frasco 250 ml.<br><br><strong>Jediael:</strong><br>• Lunes: prepara batido en botella 500 ml (25 g proteína + 1 plátano + 1 taza leche almendra).<br>• Martes: 2 rebanadas pan integral + 1 lata atún drenado + ⅓ aguacate en rec. rectangular 15×10×5 cm.<br>• Miércoles: 25 g proteína + 1 taza fresas congeladas + 1 taza leche almendra en botella 500 ml.<br>• Jueves: 200 g requesón + 1 taza piña picada en frasco 500 ml.<br>• Viernes: 2 rebanadas pan integral + 1 lata atún + ⅓ aguacate en rec. rectangular.",
+        container: "Frascos 250 ml (frutas y semillas, 7×10 cm). Rec. rectangulares pequeños (tostadas, 15×10×5 cm). Botellas 500 ml (batidos). Destino: LONCHERA. Las fresas congeladas funcionan como hielera natural en el traslado.",
+        cooling: "Refrigeración inmediata. Frascos al frente del refri junto a yogures y ensaladas.",
+        portable: true
+    },
+    {
+        time: "8:20",
+        title: "Preparar vinagreta base y porciones de grasas",
+        detail: "<strong>Vinagreta base (rinde para toda la semana):</strong> en un frasco de 250 ml con tapa agita <strong>½ taza aceite oliva + ¼ taza jugo de limón + 1 cda mostaza Dijon + 1 cdta sal + ½ cdta pimienta + 1 cdta orégano seco</strong>. Agita 30 segundos hasta emulsionar.<br><br><strong>Porciones de frutos secos y grasas por día (bolsas pequeñas o frascos 250 ml):</strong>cada ración que el menú requiera ya quedó dentro de los frascos de yogurt y colaciones; este paso solo consolida las porciones extras: <strong>5 bolsas de 10 almendras</strong> para Emmanuel desayunos overnight/hot cakes, <strong>guacamole del día se prepara fresco cada mañana</strong> con aguacate (nunca se pre-almacena).",
+        container: "Frasco 250 ml para vinagreta. Bolsas pequeñas o frascos 250 ml para frutos secos extras. Todo al refrigerador o despensa según corresponda.",
+        cooling: "Vinagreta dura 2 semanas refrigerada. Frutos secos no requieren refrigeración pero si están porcionados por día van al refri para flujo unificado.",
         portable: false
     },
     {
         time: "8:30",
-        title: "Cierre y limpieza",
-        detail: "Lava utensilios, desinfecta superficies y verifica que el refrigerador esté entre 1°C y 4°C. Revisa las etiquetas una última vez. El meal prep de la semana está completo. <strong>Recordatorio:</strong> el sábado 25 por la noche se realizará la actualización de recetas y el siguiente ciclo de meal prep.",
+        title: "Etiquetar y organizar el refrigerador · zonas por urgencia",
+        detail: "Repasa todas las etiquetas. Reorganiza el refrigerador siguiendo estas zonas:<br><br><strong>ZONA 1 · Frontal estante superior (toma rápida mañanas):</strong><br>• 10 frascos de yogurt (al frente)<br>• 10 frascos de ensalada (detrás)<br>• 10 contenedores colaciones 2 (lateral)<br><br><strong>ZONA 2 · Estante medio (preparaciones base):</strong><br>• Recipiente grande: pollo cocinado plancha<br>• Recipiente grande: arroz integral<br>• Recipiente mediano: quinoa<br>• Recipiente mediano: frijoles con caldo<br>• Recipiente grande: calabacitas y pimientos asados<br>• Recipiente mediano: champiñones asados<br>• Recipiente mediano: huevos cocidos con cáscara<br>• Recipiente mediano: salmón cocinado (consumir lunes)<br>• Frasco 500 ml: salsa jitomate<br><br><strong>ZONA 3 · Cajón inferior (verduras crudas):</strong><br>• Recipiente mediano: espinaca baby<br>• Recipiente mediano: lechuga/mixta sobrante<br>• Verduras frescas adicionales (jitomate, pepino, etc.)<br><br><strong>ZONA 4 · Puerta (aderezos y acompañamientos):</strong><br>• Frasco vinagreta<br>• Bolsa hermética: pollo chipotle marinado (cocinar jueves)<br>• Bolsa hermética: pescado marinado (cocinar martes noche)<br><br><strong>CONGELADOR:</strong><br>• Bolsa: albóndigas de pavo crudas<br>• Bolsa: salmón crudo (viernes)<br>• Bolsa: pescado blanco crudo (sábado)<br>• Bolsa: pollo crudo sobrante (grupo C)",
+        container: "Verifica sellado de cada tapa. Etiquetas removibles con fecha de preparación y fecha límite de consumo en todos los recipientes.",
+        cooling: null,
+        portable: false
+    },
+    {
+        time: "8:45",
+        title: "Limpieza, verificación final y cierre",
+        detail: "Lava sartenes, ollas, tablas y utensilios con agua caliente y jabón. Desinfecta superficies de trabajo con solución de <strong>1 cucharada de cloro en 1 litro de agua</strong>, especialmente donde estuvo la proteína cruda. Verifica con termómetro que el refrigerador esté <strong>entre 1°C y 4°C</strong> y el congelador en <strong>-18°C o menos</strong>. Revisa las etiquetas una última vez: cada recipiente debe indicar contenido, fecha de preparación y fecha límite de consumo.<br><br><strong>RECORDATORIOS DE SEGURIDAD PARA LA SEMANA:</strong><br>• Pollo plancha: consumir antes del <strong>jueves 23</strong> por la noche.<br>• Salmón cocinado: consumir <strong>lunes 20</strong> máximo martes.<br>• Frijoles, arroz, quinoa: consumir antes del <strong>viernes 24</strong>.<br>• Pescado miércoles: cocinar martes noche o miércoles temprano.<br>• Albóndigas jueves: sacar del congelador al refri el <strong>miércoles 22 en la noche</strong> para descongelar lento.<br>• Pollo chipotle viernes: cocinar el <strong>jueves 23 por la noche</strong>.<br>• Salmón viernes: sacar del congelador el <strong>jueves 23 en la noche</strong>.<br>• Pescado sábado: sacar del congelador el <strong>viernes 24 en la noche</strong>.<br><br>El meal prep de la semana está completo. El sábado 25 por la noche se hará la actualización de recetas y se iniciará el siguiente ciclo de meal prep.",
         container: null,
         cooling: null,
         portable: false
+    }
+];
+
+// ============================================================
+// PREP_SCHEDULE: cronograma completo de preparación distribuido
+// a lo largo de la semana. El domingo es la sesión principal,
+// pero hay acciones adicionales en días intermedios que son
+// críticas para la seguridad alimentaria.
+// ============================================================
+const PREP_SCHEDULE = [
+    {
+        dayKey: "sunday",
+        dayLabel: "Domingo 19 · sesión principal",
+        dayDescription: "Meal prep dominical. Cocina, porciona y almacena todo lo que se consumirá en los primeros 3 días. Deja congelado crudo lo que se cocinará a media semana.",
+        dayColor: "plum",
+        steps: PREP_STEPS
+    },
+    {
+        dayKey: "tuesday_night",
+        dayLabel: "Martes 21 por la noche",
+        dayDescription: "Cocción del pescado blanco para la comida del miércoles. Recuerda que el pescado cocinado solo dura 48 horas en refrigerador.",
+        dayColor: "terracotta",
+        steps: [
+            {
+                time: "9:00",
+                title: "Cocinar pescado blanco marinado",
+                detail: "Saca del refrigerador la bolsa hermética etiquetada <strong>'Pescado marinado · cocinar mar noche o mie 22'</strong> (500 g, 2 filetes). Precalienta el horno a <strong>200°C</strong>. Coloca los filetes en bandeja con papel aluminio, añade <strong>1 cda de aceite oliva adicional por encima</strong>, <strong>rodajas de limón</strong> y una pizca más de sal si gustas. Hornea <strong>12-15 minutos</strong> hasta que el centro marque <strong>63°C (145°F)</strong> o se desmenuce fácilmente con tenedor. Deja reposar 5 minutos antes de guardar.",
+                container: "Recipiente hermético mediano etiquetado <strong>'Pescado blanco · cocinado mar 21 · consumir mie 22'</strong>. Guarda los dos filetes por separado con papel encerado entre ellos si las porciones de Emmanuel y Jediael son distintas (180 g E + 240 g J).",
+                cooling: "Enfriar 15-20 minutos sin tapar. Refrigerar antes de las 2 horas desde cocción. Debe consumirse el miércoles, no puede postergarse al jueves.",
+                portable: false
+            }
+        ]
+    },
+    {
+        dayKey: "wednesday_night",
+        dayLabel: "Miércoles 22 por la noche",
+        dayDescription: "Descongelado controlado de las albóndigas de pavo para la comida del jueves. El descongelado lento en refri es más seguro que a temperatura ambiente.",
+        dayColor: "terracotta",
+        steps: [
+            {
+                time: "10:00",
+                title: "Sacar albóndigas del congelador al refrigerador",
+                detail: "Saca del congelador la bolsa hermética etiquetada <strong>'Albóndigas pavo crudas · formadas dom 19 · cocinar jue 23'</strong>. Colócala en una bandeja o plato hondo (por si escurre líquido) en el estante inferior del refrigerador, lejos de alimentos listos para consumir. El descongelado lento en refri toma aproximadamente <strong>12-16 horas</strong> y mantiene las albóndigas en zona segura de temperatura todo el tiempo.<br><br><strong>NUNCA descongelar a temperatura ambiente ni con agua caliente:</strong> la superficie alcanza temperatura de riesgo mientras el centro sigue congelado.",
+                container: "La bandeja o plato hondo debajo de la bolsa evita que goteen jugos al resto del refrigerador. Si la bolsa tiene algún pinchazo, transfiere a una nueva para evitar contaminación.",
+                cooling: null,
+                portable: false
+            }
+        ]
+    },
+    {
+        dayKey: "thursday_noon",
+        dayLabel: "Jueves 23 al mediodía",
+        dayDescription: "Cocción de las albóndigas de pavo descongeladas desde anoche. Ensamblar con la salsa de jitomate ya preparada el domingo.",
+        dayColor: "terracotta",
+        steps: [
+            {
+                time: "12:00",
+                title: "Cocinar albóndigas de pavo en salsa de jitomate",
+                detail: "Las albóndigas deben estar completamente descongeladas (las sacaste del congelador anoche). Verifica que estén flexibles al tacto y sin cristales de hielo en el centro.<br><br><strong>Ejecución:</strong><br>1. Calienta <strong>1 cda de aceite oliva</strong> en un sartén grande a fuego medio.<br>2. Dora las <strong>20 albóndigas</strong> por todos lados, 4-5 minutos en total. No las aplastes; solo las volteas.<br>3. Saca la <strong>salsa de jitomate</strong> del refrigerador (frasco 500 ml preparado el domingo). Viértela sobre las albóndigas.<br>4. Agrega <strong>1 taza de caldo de pollo bajo en sodio</strong> para que la salsa cubra las albóndigas.<br>5. Baja el fuego a medio-bajo, tapa parcialmente y cocina <strong>15-18 minutos</strong> hasta que el centro de las albóndigas marque <strong>74°C (165°F)</strong>.<br>6. Agrega <strong>1 taza de calabacita picada</strong> en los últimos 5 minutos para que quede al dente.<br><br><strong>Rinde:</strong> 10 albóndigas para Emmanuel (180 g cocinadas) + 10 albóndigas para Jediael (240 g cocinadas), con salsa y calabacita para ambos.",
+                container: "Si sobra porque prefieren cenar en casa y el jueves la comida la llevan en lonchera: recipiente hermético mediano con tapa, etiquetado <strong>'Albóndigas en salsa · cocinadas jue 23 · consumir vie 24 máximo'</strong>. Como pavo molido cocinado, la ventana es estrecha: 1-2 días según USDA.",
+                cooling: "Si guardas porción: enfriar 15-20 minutos destapada antes de refrigerar. Refrigerar antes de las 2 horas desde cocción.",
+                portable: true
+            }
+        ]
+    },
+    {
+        dayKey: "thursday_night",
+        dayLabel: "Jueves 23 por la noche",
+        dayDescription: "Noche de doble acción: cocinar el pollo chipotle para la comida del viernes y descongelar el salmón crudo para la cena del viernes.",
+        dayColor: "terracotta",
+        steps: [
+            {
+                time: "8:30",
+                title: "Cocinar pollo chipotle marinado",
+                detail: "Saca del refrigerador la bolsa hermética etiquetada <strong>'Pollo chipotle marinado · cocinar jue 23 noche'</strong> (525 g crudos, 2-3 piezas). Calienta un sartén antiadherente a fuego medio-alto, rocía con <strong>aceite en aerosol (3 disparos)</strong>. Cocina las piezas sin amontonar: <strong>6-7 minutos por lado</strong>, hasta que el termómetro interno marque <strong>74°C (165°F)</strong>. Deja reposar 5 minutos. No cortes hasta el momento de servir para conservar jugosidad.",
+                container: "Recipiente hermético mediano etiquetado <strong>'Pollo chipotle · cocinado jue 23 · consumir vie 24'</strong>. Rinde aproximadamente 420 g cocinados, porciones exactas para viernes comida (180 g E + 240 g J).",
+                cooling: "Reposar 5 min fuera del sartén. Enfriar 15-20 minutos sin tapar en plato amplio. Refrigerar antes de las 2 horas desde cocción.",
+                portable: false
+            },
+            {
+                time: "8:45",
+                title: "Sacar salmón del congelador al refrigerador",
+                detail: "Saca del congelador la bolsa hermética etiquetada <strong>'Salmón crudo 360 g · para vie 24 · descongelar jue 23 en refri'</strong>. Colócala en una bandeja en el estante inferior del refrigerador. El descongelado del salmón toma aproximadamente <strong>12-18 horas</strong> en refri. Estará listo para cocinarse el viernes por la tarde/noche.<br><br>Si al tocar la bolsa el viernes por la mañana aún sientes zonas congeladas en el centro, déjalo unas horas más en refri antes de cocinar. No intentes acelerar el descongelado a temperatura ambiente.",
+                container: "Bandeja debajo de la bolsa para contener posibles goteos.",
+                cooling: null,
+                portable: false
+            }
+        ]
+    },
+    {
+        dayKey: "friday_evening",
+        dayLabel: "Viernes 24 por la tarde",
+        dayDescription: "Cocción del salmón a la mostaza para la cena del viernes. El salmón se descongeló lento durante el día en el refrigerador desde la noche anterior.",
+        dayColor: "terracotta",
+        steps: [
+            {
+                time: "7:30",
+                title: "Cocinar salmón a la mostaza",
+                detail: "Verifica que el salmón (360 g, 2 filetes) esté completamente descongelado y firme. Si tiene aroma fuerte o textura viscosa, descártalo por seguridad.<br><br><strong>Glaseado de mostaza:</strong> en un bowl pequeño mezcla <strong>1 cda de mostaza Dijon + 1 cdta de miel o stevia + 1 cdta de aceite oliva + jugo de ½ limón + ½ cdta de pimienta + pizca de sal</strong>.<br><br><strong>Ejecución:</strong><br>1. Precalienta el horno a <strong>200°C (400°F)</strong>.<br>2. Coloca los filetes en bandeja con papel aluminio, piel hacia abajo si la tiene.<br>3. Unta el glaseado de mostaza generosamente por encima.<br>4. Hornea <strong>12-15 minutos</strong> hasta que el centro marque <strong>63°C (145°F)</strong> o se desmenuce con tenedor.<br>5. Mientras, prepara el <strong>brócoli tibio como acompañamiento</strong>: 1 taza por persona al vapor o sartén con <strong>½ cdta aceite oliva + ajo + limón</strong>, 5-6 minutos.",
+                container: "Para consumo inmediato en casa, no requiere recipiente. Si sobra porción: recipiente hermético mediano etiquetado <strong>'Salmón mostaza · cocinado vie 24 · consumir sáb 25'</strong>. Máximo 2 días.",
+                cooling: "Solo si hay sobrantes: enfriar 15-20 minutos sin tapar antes de refrigerar.",
+                portable: false
+            }
+        ]
+    },
+    {
+        dayKey: "friday_night",
+        dayLabel: "Viernes 24 por la noche",
+        dayDescription: "Sacar el pescado blanco del congelador para el empapelado del sábado.",
+        dayColor: "terracotta",
+        steps: [
+            {
+                time: "9:00",
+                title: "Sacar pescado blanco del congelador al refrigerador",
+                detail: "Saca del congelador la bolsa hermética etiquetada <strong>'Pescado crudo · para sáb 25 · descongelar vie 24 en refri'</strong> (400 g). Colócala en bandeja en el estante inferior del refrigerador. Estará listo para el empapelado del sábado después de 12-16 horas de descongelado lento.",
+                container: "Bandeja debajo de la bolsa para contener posibles goteos.",
+                cooling: null,
+                portable: false
+            }
+        ]
+    },
+    {
+        dayKey: "saturday_evening",
+        dayLabel: "Sábado 25 por la tarde",
+        dayDescription: "Cocción del pescado empapelado para la cena del sábado. Último pescado del ciclo; el empapelado preserva humedad y sabor.",
+        dayColor: "terracotta",
+        steps: [
+            {
+                time: "7:00",
+                title: "Cocinar pescado empapelado al horno",
+                detail: "Verifica que el pescado blanco (400 g, 2 filetes) esté completamente descongelado y sin aroma fuerte.<br><br><strong>Ejecución (empapelado individual):</strong><br>1. Precalienta el horno a <strong>200°C (400°F)</strong>.<br>2. Corta <strong>2 rectángulos grandes de papel aluminio</strong> (30×40 cm cada uno).<br>3. En el centro de cada papel: coloca <strong>1 filete de pescado</strong>, encima <strong>1 taza de verduras mixtas picadas</strong> (calabacita, zanahoria en julianas, champiñones, pimiento). Añade <strong>rodajas de limón, 1 cdta aceite oliva, ajo picado, sal, pimienta</strong>.<br>4. Cierra los papeles formando un paquete hermético (dobla los bordes).<br>5. Hornea <strong>18-20 minutos</strong>. El vapor interno cuece todo al mismo tiempo.<br>6. Abre con cuidado (el vapor sale caliente) y verifica que el centro del pescado marque <strong>63°C (145°F)</strong>.<br><br><strong>Acompañamiento:</strong> servir con <strong>⅔ taza de arroz integral para Emmanuel y 1⅓ taza para Jediael</strong> recalentado del arroz preparado el domingo.",
+                container: "Consumo inmediato. El empapelado se sirve directamente del papel al plato. No se guardan sobras porque es la cena de cierre de ciclo.",
+                cooling: null,
+                portable: false
+            }
+        ]
+    },
+    {
+        dayKey: "saturday_night",
+        dayLabel: "Sábado 25 por la noche · actualización",
+        dayDescription: "Cierre del ciclo en curso y apertura del siguiente. Revisa lo consumido, exporta métricas y actualiza recetas antes del próximo meal prep dominical.",
+        dayColor: "plum",
+        steps: [
+            {
+                time: "8:00",
+                title: "Revisión de consumo y limpieza del refrigerador",
+                detail: "Verifica que ningún recipiente del ciclo anterior haya quedado sin consumir. Los restos de pollo cocinado, arroz, quinoa y frijoles que puedan haber sobrado deben descartarse si ya superaron las ventanas seguras:<br><br>• <strong>Pollo plancha cocinado dom 19:</strong> jueves 23 fue el último día seguro.<br>• <strong>Frijoles, arroz, quinoa:</strong> viernes 24 fue el último día seguro.<br>• <strong>Verduras horneadas:</strong> jueves 23 fue el último día seguro.<br>• <strong>Yogurt porcionado:</strong> hasta viernes 24 en calidad óptima.<br><br>Lava a fondo todos los recipientes vacíos con agua caliente y jabón. Desinfecta el interior del refrigerador con solución de bicarbonato.",
+                container: null,
+                cooling: null,
+                portable: false
+            },
+            {
+                time: "8:30",
+                title: "Exportar métricas de la semana",
+                detail: "Cada uno abre la aplicación desde su teléfono, selecciona su perfil (E o J) y toca el ícono de descarga en la esquina superior derecha. Elige <strong>'Ver datos en formato JSON'</strong> y copia el contenido, o <strong>'Descargar archivo .json'</strong> para guardarlo en el teléfono. Compartan ambos archivos para análisis en la próxima conversación.",
+                container: null,
+                cooling: null,
+                portable: false
+            },
+            {
+                time: "9:00",
+                title: "Revisión de recetas y meal prep del próximo ciclo",
+                detail: "Antes de planificar el nuevo ciclo, revisen juntos qué comidas funcionaron y cuáles requieren ajuste. Anoten cualquier observación sobre porciones insuficientes o excesivas, sabores que no convencieron, o preparaciones que resultaron engorrosas. Esta información sirve para la actualización de recetas antes del meal prep del domingo 26.<br><br>Si se van a repetir las mismas recetas, verifiquen la lista de compras del próximo ciclo. Si se van a cambiar, compartan las nuevas ideas antes del domingo para tener tiempo de ajustar cantidades y cronograma.",
+                container: null,
+                cooling: null,
+                portable: false
+            }
+        ]
     }
 ];
 
@@ -2242,17 +3291,17 @@ function renderShopping() {
     const container = document.getElementById("shoppingCategories");
     let total = 0, done = 0;
     let html = "";
-    
+
     for (const [category, items] of Object.entries(SHOPPING_DATA)) {
         let categoryDone = 0;
         let itemsHtml = "";
-        
+
         items.forEach((item, idx) => {
             const key = `${category}__${idx}`;
             const isChecked = state.shopping[key] === true;
             if (isChecked) { done++; categoryDone++; }
             total++;
-            
+
             itemsHtml += `
                 <li class="item ${isChecked ? "checked" : ""}" onclick="toggleShoppingItem('${key}')">
                     <div class="checkbox">
@@ -2262,10 +3311,9 @@ function renderShopping() {
                         <div class="item-name">${item.name}</div>
                         <div class="item-amount">${item.amount}</div>
                     </div>
-                </li>
-            `;
+                </li>`;
         });
-        
+
         html += `
             <div class="category-group">
                 <div class="category-header">
@@ -2273,15 +3321,21 @@ function renderShopping() {
                     <span class="category-count">${categoryDone}/${items.length}</span>
                 </div>
                 <ul class="item-list">${itemsHtml}</ul>
-            </div>
-        `;
+            </div>`;
     }
-    
+
+    const prevDone = parseInt(document.getElementById("shopDone").textContent) || 0;
     container.innerHTML = html;
     document.getElementById("shopDone").textContent = done;
     document.getElementById("shopTotal").textContent = total;
     const pct = total > 0 ? (done / total) * 100 : 0;
     document.getElementById("shopProgress").style.width = pct + "%";
+
+    // Fire fireworks only at the exact moment the list goes from incomplete to complete
+    // (not every time renderShopping is called when the list is already complete)
+    if (done === total && total > 0 && prevDone < total) {
+        setTimeout(launchFireworks, 250);
+    }
 }
 
 function toggleShoppingItem(key) {
@@ -2299,26 +3353,112 @@ function resetShopping() {
 }
 
 // ====================================================
+// FIREWORKS ENGINE
+// ====================================================
+
+let fireworksAnimId = null;
+
+function launchFireworks() {
+    const canvas = document.getElementById("fireworksCanvas");
+    const overlay = document.getElementById("fireworksOverlay");
+    canvas.style.display = "block";
+    overlay.style.display = "flex";
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext("2d");
+    const particles = [];
+
+    const COLORS = ["#E8C547","#6B8E23","#C56B3E","#7B3F5C","#4A9E6B","#E8A547","#FFFEF9","#2F8F6F"];
+
+    function Particle(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 7 + 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.018 + 0.012;
+        this.size = Math.random() * 4 + 2;
+        this.gravity = 0.12;
+    }
+
+    function burst(x, y) {
+        const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        const count = Math.floor(Math.random() * 40 + 50);
+        for (let i = 0; i < count; i++) particles.push(new Particle(x, y, color));
+    }
+
+    // Initial volley of bursts
+    const W = canvas.width, H = canvas.height;
+    const bursts = [
+        [W * 0.2, H * 0.35], [W * 0.5, H * 0.25], [W * 0.8, H * 0.35],
+        [W * 0.35, H * 0.5], [W * 0.65, H * 0.5],
+        [W * 0.15, H * 0.6], [W * 0.85, H * 0.6],
+        [W * 0.5, H * 0.7]
+    ];
+    bursts.forEach(([bx, by]) => burst(bx, by));
+
+    // Timed extra bursts
+    const extraTimers = [300, 600, 900, 1200, 1500].map(delay =>
+        setTimeout(() => {
+            burst(Math.random() * W * 0.7 + W * 0.15, Math.random() * H * 0.5 + H * 0.1);
+            burst(Math.random() * W * 0.7 + W * 0.15, Math.random() * H * 0.5 + H * 0.1);
+        }, delay)
+    );
+
+    function animate() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += p.gravity;
+            p.vx *= 0.98;
+            p.alpha -= p.decay;
+            if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+        if (particles.length > 0) {
+            fireworksAnimId = requestAnimationFrame(animate);
+        } else {
+            stopFireworks();
+        }
+    }
+
+    fireworksAnimId = requestAnimationFrame(animate);
+
+    // Auto-dismiss after 4 seconds
+    setTimeout(stopFireworks, 4000);
+}
+
+function stopFireworks() {
+    if (fireworksAnimId) { cancelAnimationFrame(fireworksAnimId); fireworksAnimId = null; }
+    const canvas = document.getElementById("fireworksCanvas");
+    const overlay = document.getElementById("fireworksOverlay");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = "none";
+    overlay.style.display = "none";
+}
+
+// ====================================================
 // MEALS TRACKING
 // ====================================================
 
 function getCurrentDayIndex() {
-    // This function returns the index (0-6) that corresponds to "today" within
-    // the visual week displayed in the date navigator.
-    //
-    // Week layout in the navigator: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
-    //                               [ 0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ]
-    //
-    // JavaScript's getDay() returns: Sun=0, Mon=1, Tue=2, ..., Sat=6
-    //
-    // Mapping rules:
-    //   - If today is Monday (getDay=1) → index 0 in the navigator
-    //   - If today is Tuesday (getDay=2) → index 1
-    //   - ...
-    //   - If today is Saturday (getDay=6) → index 5
-    //   - If today is Sunday (getDay=0) → index 6 (update day at the end)
-    const today = new Date().getDay();
-    return today === 0 ? 6 : today - 1;
+    // New layout: [Sun, Mon, Tue, Wed, Thu, Fri, Sat] at indices [0,1,2,3,4,5,6]
+    // This matches JavaScript's native getDay() directly, so no conversion needed.
+    return new Date().getDay();
 }
 
 function renderDateNav() {
@@ -2326,36 +3466,26 @@ function renderDateNav() {
     const today = new Date();
     const todayIdx = getCurrentDayIndex();
     
-    // Calculate the Monday that anchors the ACTIVE meal cycle
-    // 
-    // Key insight: for this user flow, Sunday is not the END of the past week
-    // but rather the START of the upcoming cycle (it's the prep day).
-    // 
-    // If today is Sunday, we want to show the UPCOMING week (tomorrow's Monday onwards),
-    // not the week that just ended. This reflects the operational mental model
-    // where Sunday bridges into the next consumption week.
-    const monday = new Date(today);
-    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-    
-    if (dayOfWeek === 0) {
-        // Today is Sunday (prep day): the active Monday is TOMORROW
-        monday.setDate(today.getDate() + 1);
-    } else {
-        // Today is Monday through Saturday: the active Monday is this week's Monday
-        const diff = 1 - dayOfWeek;
-        monday.setDate(today.getDate() + diff);
-    }
+    // New week layout: [Sun, Mon, Tue, Wed, Thu, Fri, Sat] at indices [0..6]
+    // Sunday at index 0 is the prep day that STARTS the consumption cycle.
+    //
+    // We need to find the Sunday that anchors the currently active cycle:
+    //   - If today is Sunday: that Sunday IS the anchor (today)
+    //   - If today is Mon-Sat: the anchor is the MOST RECENT past Sunday
+    //     (the one that generated the meals being consumed this week)
+    const anchorSunday = new Date(today);
+    const dayOfWeek = today.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+    anchorSunday.setDate(today.getDate() - dayOfWeek);
     
     const selectedIdx = state.selectedDayIndex !== null ? state.selectedDayIndex : todayIdx;
     
-    const dayNames = ["LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB", "DOM"];
+    const dayNames = ["DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB"];
     let html = "";
     for (let i = 0; i < 7; i++) {
-        const date = new Date(monday);
-        date.setDate(monday.getDate() + i);
+        const date = new Date(anchorSunday);
+        date.setDate(anchorSunday.getDate() + i);
         
-        // Sunday (index 6) is the update day and receives a distinctive visual treatment
-        // This reinforces the mental distinction between consumption days and preparation day
+        // Sunday (index 0) is the prep/update day and gets distinctive visual
         const isUpdateDay = WEEKLY_MENU[i].isUpdateDay === true;
         const classes = [
             "date-chip",
@@ -2373,14 +3503,15 @@ function renderDateNav() {
     }
     container.innerHTML = html;
     
-    const selectedDate = new Date(monday);
-    selectedDate.setDate(monday.getDate() + selectedIdx);
+    // Update the big date header based on the selected day
+    const selectedDate = new Date(anchorSunday);
+    selectedDate.setDate(anchorSunday.getDate() + selectedIdx);
+    
     const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
     document.getElementById("dayNumber").textContent = selectedDate.getDate();
     
-    // Different subtitle for update day to make the day's purpose explicit
     const dayLabel = WEEKLY_MENU[selectedIdx].isUpdateDay 
-        ? `${monthNames[selectedDate.getMonth()]} · actualización`
+        ? `${monthNames[selectedDate.getMonth()]} · meal prep`
         : `${monthNames[selectedDate.getMonth()]} · ${WEEKLY_MENU[selectedIdx].day.toLowerCase()}`;
     document.getElementById("dayMonth").textContent = dayLabel;
 }
@@ -2399,9 +3530,7 @@ function renderMeals() {
     const selectedIdx = state.selectedDayIndex !== null ? state.selectedDayIndex : getCurrentDayIndex();
     const dayData = WEEKLY_MENU[selectedIdx];
     const container = document.getElementById("mealsList");
-    
-    // Special handling for the update day (Sunday)
-    // On this day no meals are tracked; instead we show a banner explaining the day's purpose
+
     if (dayData.isUpdateDay) {
         container.innerHTML = `
             <div class="update-day-banner">
@@ -2414,33 +3543,85 @@ function renderMeals() {
             </div>
         `;
         document.getElementById("mealsDone").textContent = "—";
-        document.getElementById("mealsDone").parentElement.nextElementSibling.textContent = "día de preparación";
+        document.getElementById("mealsStatLabel").textContent = "día de preparación";
         renderDateNav();
         return;
     }
-    
-    // Restore the normal stat label for regular consumption days
-    document.getElementById("mealsDone").parentElement.nextElementSibling.textContent = "comidas del día";
-    
+
+    document.getElementById("mealsStatLabel").textContent = "comidas del día";
+
     let done = 0;
     let html = "";
-    
+
     dayData.meals.forEach((meal, mealIdx) => {
         const key = `${state.currentUser}_${selectedIdx}_${mealIdx}`;
         const isDone = state.meals[key] === true;
         if (isDone) done++;
-        
         const portions = state.currentUser === "E" ? meal.E : meal.J;
-        
-        // Render lunchbox badge only for portable meals
-        // The icon signals to the user that this meal is already packed and ready to grab
+        const recipeKey = `${selectedIdx}_${mealIdx}`;
+        const recipe = RECIPES[recipeKey];
         const lunchboxBadge = meal.portable ? `
             <div class="lunchbox-badge">
                 <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
                 Lonchera
-            </div>
-        ` : "";
-        
+            </div>` : "";
+
+        // Build recipe panel HTML
+        let recipeHtml = "";
+        if (recipe) {
+            // Ingredients table — show column for each user or a shared column
+            let ingsHtml = `
+                <div class="recipe-ing-header">
+                    <span>Ingrediente</span>
+                    <span class="rih-e">E</span>
+                    <span class="rih-j">J</span>
+                </div>`;
+            recipe.ingredients.forEach(ing => {
+                if (ing.shared) {
+                    ingsHtml += `
+                        <div class="recipe-ingredient-row">
+                            <div class="recipe-ing-name">${ing.name}</div>
+                            <div class="recipe-ing-shared">${ing.shared}</div>
+                        </div>`;
+                } else {
+                    const eVal = ing.E || "—";
+                    const jVal = ing.J || "—";
+                    ingsHtml += `
+                        <div class="recipe-ingredient-row">
+                            <div class="recipe-ing-name">${ing.name}</div>
+                            <div class="recipe-ing-e">${eVal}</div>
+                            <div class="recipe-ing-j">${jVal}</div>
+                        </div>`;
+                }
+            });
+
+            // Steps
+            let stepsHtml = "";
+            recipe.steps.forEach((step, i) => {
+                stepsHtml += `
+                    <div class="recipe-step-item">
+                        <div class="recipe-step-num">${i + 1}</div>
+                        <div>${step}</div>
+                    </div>`;
+            });
+
+            const noteHtml = recipe.note ? `<div class="recipe-note">${recipe.note}</div>` : "";
+
+            recipeHtml = `
+                <button class="recipe-toggle-btn" id="rtb-${recipeKey}" onclick="toggleRecipe('${recipeKey}')">
+                    <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    Ver receta y porciones
+                    <svg viewBox="0 0 24 24" style="margin-left:auto"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="recipe-panel" id="rp-${recipeKey}">
+                    <div class="recipe-section-label">Ingredientes</div>
+                    ${ingsHtml}
+                    <div class="recipe-section-label">Preparación</div>
+                    ${stepsHtml}
+                    ${noteHtml}
+                </div>`;
+        }
+
         html += `
             <div class="meal-card ${isDone ? "completed" : ""}">
                 <div class="meal-header">
@@ -2457,13 +3638,25 @@ function renderMeals() {
                 <div class="portions">
                     <span class="portion-tag"><strong>${state.currentUser}:</strong> ${portions}</span>
                 </div>
-            </div>
-        `;
+                ${recipeHtml}
+            </div>`;
     });
-    
+
     container.innerHTML = html;
     document.getElementById("mealsDone").textContent = done;
     renderDateNav();
+}
+
+function toggleRecipe(key) {
+    const btn = document.getElementById(`rtb-${key}`);
+    const panel = document.getElementById(`rp-${key}`);
+    const isOpen = panel.classList.contains("open");
+    panel.classList.toggle("open", !isOpen);
+    btn.classList.toggle("open", !isOpen);
+    btn.querySelector("svg:first-of-type").setAttribute("viewBox", "0 0 24 24");
+    // Update button text
+    const textNode = [...btn.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+    if (textNode) textNode.textContent = isOpen ? " Ver receta y porciones" : " Ocultar receta";
 }
 
 function toggleMeal(key) {
@@ -2482,50 +3675,90 @@ function renderSteps() {
     const container = document.getElementById("stepsList");
     let html = "";
     
-    PREP_STEPS.forEach((step, idx) => {
-        const key = `step_${idx}`;
-        const isDone = state.prepSteps[key] === true;
-        
-        let detailHtml = step.detail;
-        
-        if (step.container) {
-            detailHtml += `
-                <div class="container-info">
-                    <span class="container-info-label">Recipiente · sellado hermético</span>
-                    ${step.container}
-                </div>
-            `;
-        }
-        
-        if (step.cooling) {
-            detailHtml += `
-                <div class="cooling-info">
-                    <span class="cooling-info-label">Enfriado previo a refrigerar</span>
-                    ${step.cooling}
-                </div>
-            `;
-        }
+    // Iterate over each day section in the full weekly prep schedule.
+    // Each section shows its day header followed by the specific steps
+    // that need to be executed that day. This replaces the previous
+    // single-list view that only showed Sunday.
+    PREP_SCHEDULE.forEach((daySection, dayIdx) => {
+        // Day header: distinct styling based on dayColor (plum for main prep
+        // days, terracotta for intermediate action days)
+        const headerClass = daySection.dayColor === "plum" 
+            ? "day-section-header day-section-main" 
+            : "day-section-header day-section-action";
         
         html += `
-            <div class="step-item ${isDone ? "completed" : ""}" id="step-${idx}">
-                <div class="step-header" onclick="toggleStepDetail(${idx})">
-                    <div class="step-time">${step.time}</div>
-                    <div class="step-title">${step.title}</div>
-                    <div class="step-check" onclick="event.stopPropagation(); toggleStep(${idx})">
-                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                    </div>
+            <div class="day-section">
+                <div class="${headerClass}">
+                    <div class="day-section-title">${daySection.dayLabel}</div>
+                    <div class="day-section-desc">${daySection.dayDescription}</div>
                 </div>
-                <div class="step-detail">${detailHtml}</div>
-            </div>
         `;
+        
+        // Render the steps for this day
+        daySection.steps.forEach((step, stepIdx) => {
+            // Compound key includes day to keep progress separate across days
+            const key = `${daySection.dayKey}_step_${stepIdx}`;
+            const isDone = state.prepSteps[key] === true;
+            const domId = `step-${daySection.dayKey}-${stepIdx}`;
+            
+            let detailHtml = step.detail;
+            
+            if (step.container) {
+                detailHtml += `
+                    <div class="container-info">
+                        <span class="container-info-label">Recipiente · sellado hermético</span>
+                        ${step.container}
+                    </div>
+                `;
+            }
+            
+            if (step.cooling) {
+                detailHtml += `
+                    <div class="cooling-info">
+                        <span class="cooling-info-label">Enfriado previo a refrigerar</span>
+                        ${step.cooling}
+                    </div>
+                `;
+            }
+            
+            html += `
+                <div class="step-item ${isDone ? "completed" : ""}" id="${domId}">
+                    <div class="step-header" onclick="toggleStepDetailByDay('${daySection.dayKey}', ${stepIdx})">
+                        <div class="step-time">${step.time}</div>
+                        <div class="step-title">${step.title}</div>
+                        <div class="step-check" onclick="event.stopPropagation(); toggleStepByDay('${daySection.dayKey}', ${stepIdx})">
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                    </div>
+                    <div class="step-detail">${detailHtml}</div>
+                </div>
+            `;
+        });
+        
+        html += `</div>`; // close day-section
     });
     
     container.innerHTML = html;
 }
 
+function toggleStepDetailByDay(dayKey, stepIdx) {
+    const el = document.getElementById(`step-${dayKey}-${stepIdx}`);
+    if (el) el.classList.toggle("expanded");
+}
+
+function toggleStepByDay(dayKey, stepIdx) {
+    const key = `${dayKey}_step_${stepIdx}`;
+    state = setState(s => {
+        s.prepSteps[key] = !s.prepSteps[key];
+        return s;
+    });
+    renderSteps();
+}
+
+// Legacy functions kept for backward compatibility with any old state keys
 function toggleStepDetail(idx) {
     const el = document.getElementById("step-" + idx);
-    el.classList.toggle("expanded");
+    if (el) el.classList.toggle("expanded");
 }
 
 function toggleStep(idx) {
